@@ -1,0 +1,53 @@
+body {
+  background-color: #124191;
+}
+
+.auth-content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+  background-color: white;
+}
+
+.space-options {
+  padding-top: 60px;
+}
+
+.title {
+  text-transform: uppercase;
+  color: #124191;
+  text-align: center;
+}
+
+.space-options-reg {
+  padding-top: 30px;
+}
+
+.big-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  width: 80%;
+  height: 62px;
+  background-color: #124191;
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+.btn-red {
+  background-color: #b32c2c !important;
+}
+
+.btn-green {
+  background-color: #3db926 !important;
+}
+
+.bottom-text {
+  padding-top: 25px;
+  margin-top: 50px;
+  background-color: #f2f2f2;
+  height: 50px;
+}

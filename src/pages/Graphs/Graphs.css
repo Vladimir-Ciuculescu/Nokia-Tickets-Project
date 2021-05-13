@@ -1,0 +1,79 @@
+.graphs-page {
+  position: absolute;
+  margin-left: 200px;
+  margin-top: 70px;
+}
+
+.sub-page {
+  margin: 35px;
+}
+
+.box-mod {
+  background-color: #fff;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 5px 0 rgb(43 43 43 / 10%),
+    0 11px 6px -7px rgb(43 43 43 / 10%);
+  box-shadow: 0 0 5px 0 rgb(43 43 43 / 10%), 0 11px 6px -7px rgb(43 43 43 / 10%);
+  position: relative;
+}
+
+.box-mod-actions {
+  background-color: #fff;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 5px 0 rgb(43 43 43 / 10%),
+    0 11px 6px -7px rgb(43 43 43 / 10%);
+  box-shadow: 0 0 5px 0 rgb(43 43 43 / 10%), 0 11px 6px -7px rgb(43 43 43 / 10%);
+  position: relative;
+}
+
+.actions-container {
+  display: grid;
+  grid-template-columns: 15% 15% 25% 45%;
+  grid-gap: 10px;
+  padding-left: 20px;
+  padding-bottom: 15px;
+}
+
+.calendar-icon {
+}
+
+.btn-small {
+  background-color: #c91515;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 0 2px;
+  cursor: pointer;
+  padding: 6px 24px;
+}
+
+.btn-small-on {
+  background-color: #4caf50;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 59% 40%;
+  grid-gap: 10px;
+}
+
+.graphContainer {
+  padding: 15px;
+}
+
+.big-table {
+  padding: 0 25px 1px 25px;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
