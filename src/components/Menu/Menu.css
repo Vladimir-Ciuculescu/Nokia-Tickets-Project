@@ -8,7 +8,8 @@
   width: 100%;
   color: white;
   text-align: center;
-  background-color: green;
+  background: url(https://i.ibb.co/QJ1JWZ9/staff.png);
+  background-size: cover;
   height: 50px;
   font-size: 24px;
   padding-top: 20px;

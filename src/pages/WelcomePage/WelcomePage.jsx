@@ -28,7 +28,7 @@ export default class WelcomePage extends React.Component {
 
                 <BrowserRouter>
                     <Switch>
-                        <Route path = "/welcome/notificari" component = {NotificationsPage} />
+                        <Route path = "/welcome/notificari" component = {NotificationsPage}></Route>
                         <Route path="/welcome/setari" component={SettingsPage} />
                         <Route path ="/welcome/grafice" component = {Graphs} />
                     </Switch>

@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import React from 'react';
 import './Header.css';
 import { IoMdNotifications } from "react-icons/io";
@@ -6,17 +5,34 @@ import { CgProfile } from 'react-icons/cg';
 import { BsFillXCircleFill,BsFillInfoCircleFill } from 'react-icons/bs'
 import { AiFillWarning } from 'react-icons/ai';
 import axios from 'axios';
+import NotificationsContainer from '../NotificationsContainer/NotificationsContainer';
+import fb from '../../Firebase.js';
+import firestore from '@firebase/firestore';
+
+var variables = fb
+	.firestore()
+	.collection("NOKIA")
+	.doc('variables');
+
 
 export default class Header extends React.Component {
 
+  state = {
+    row: [],
+    toggleNotifications:false,
+      
+    }
 
     constructor(props) {
     super(props);
 
-    this.state = {
-      row: [],
-      toggleNotifications:false,
-    }
+      variables.onSnapshot(doc => {
+        this.setState({
+          toggleNotifications:doc.data().toggleNotifications
+        })
+      })
+      
+    
  }
 
     componentDidMount()
@@ -34,21 +50,34 @@ export default class Header extends React.Component {
 
           });
         
-    }
+  }
+  
+  showNotificationsContainer() {
+   
+    
+    
+    variables.update({
+					toggleNotifications:!this.state.toggleNotifications
+				});
+  }
 
-    render() {
+  render() {
+      
+
         
         return (
 
             <div className="header-container">
                 
                 <div className = "account-section">
-                    
-                    <IoMdNotifications className = "icon notification-icon"></IoMdNotifications>
+
+              
+              
+                    <IoMdNotifications className = "icon notification-icon" onClick = {() => this.showNotificationsContainer()}></IoMdNotifications>
                     <text className = "profile-name">John Doe</text>
                     <CgProfile className = "icon profile-icon"></CgProfile>
                     
-                    
+                   
                     
 
                        
