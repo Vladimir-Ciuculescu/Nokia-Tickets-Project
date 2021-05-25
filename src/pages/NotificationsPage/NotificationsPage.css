@@ -3,3 +3,9 @@
   margin-left: 200px;
   margin-top: 70px;
 }
+
+.notifications-header {
+  font-family: "Montserrat", sans-serif;
+  padding: 20px;
+  color: black;
+}

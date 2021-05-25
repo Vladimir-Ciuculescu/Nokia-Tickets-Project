@@ -1,37 +1,91 @@
 .notifications-container {
   position: absolute;
+  height: 800px;
+  width: 330px;
+  background-color: #483d8b;
   right: 0;
-  margin-right: 220px;
-  margin-top: 80px;
-  width: 300px;
+  margin-right: 210px;
+  margin-top: 75px;
   border-radius: 10px;
-  -webkit-box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.75);
-  height: 00px;
-  overflow: scroll;
+  z-index: 3;
 }
 
-.notifications-header {
-  font-size: 30px;
-  font-family: "Roboto", sans-serif;
-  font-weight: bold;
-  padding-left: 30px;
-  position: absolute;
-  margin-top: 20px;
+.notifications-Header {
+  margin-left: 30px;
+  margin-top: 30px;
+  color: white;
+  font-size: 24px;
 }
 
 .horizontal-line {
+  width: 10px;
   height: 2px;
-  margin-top: 20px;
+  background-color: white;
   width: 80%;
-  background-color: black;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 70px;
+  margin-left: 10%;
+  margin-top: 10px;
 }
 
-.notifications-messages {
+.notifications-list {
+  width: 90%;
+
+  height: 88%;
+  margin-left: 3%;
+  margin-top: 10px;
+  word-wrap: break-word;
   display: flex;
   flex-direction: column;
+  overflow: auto;
+}
+
+.notification-item {
+  color: white;
+  font-size: 20px;
+  margin-top: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.notification-item text {
+  margin-left: 10px;
+}
+
+.notification-item:hover {
+  background-color: blueviolet;
+}
+
+.Icon {
+  transform: translateY(30%);
+}
+
+.danger-icon {
+  color: red;
+  font-size: 30px;
+}
+
+.warning-icon {
+  color: yellow;
+  font-size: 30px;
+}
+
+.info-icon {
+  color: blue;
+  font-size: 30px;
+}
+
+/*style the scrollbar*/
+
+.notifications-list::-webkit-scrollbar {
+  width: 8px; /* width of the entire scrollbar */
+}
+
+.notifications-list::-webkit-scrollbar-track {
+  background: transparent; /* color of the tracking area */
+}
+
+.notifications-list::-webkit-scrollbar-thumb {
+  background-color: black; /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+  border: 2px solid transparent; /* creates padding around scroll thumb */
 }
