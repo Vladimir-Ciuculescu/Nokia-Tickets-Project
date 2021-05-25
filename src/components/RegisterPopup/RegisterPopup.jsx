@@ -104,18 +104,17 @@ function Popup(props) {
 
          {
             console.log(NameError);
-      
-              let parameters = new FormData();
-        parameters.append('name',nameReg);
+            let parameters = new FormData();
+            parameters.append('name',nameReg);
             parameters.append('surname',surnameReg);
-          parameters.append('email',emailReg);
-          parameters.append('telephone',telephoneReg);
-          parameters.append('address',addressReg);
-          parameters.append('username',usernameReg);
-        parameters.append('password', passwordReg);
-          parameters.append('birth',birthReg);
+            parameters.append('email',emailReg);
+            parameters.append('telephone',telephoneReg);
+            parameters.append('address',addressReg);
+            parameters.append('username',usernameReg);
+            parameters.append('password', passwordReg);
+            parameters.append('birth',birthReg);
           parameters.append('gender',genderReg);
-        Axios.post('http://localhost/nokia/register.php',
+        Axios.post('http://localhost/NOKIA-entire-project/php/register.php',
                 parameters
             ).then((response) => {
             
@@ -169,13 +168,13 @@ return (
                 <text style={{ color: usernameReg ? "white" : "red" }}>{UsernameError}</text>
         <input type="password" placeholder="Password" onChange={(e)=>{setPasswordReg(e.target.value);console.log(passwordReg)}}></input>
                 <text style={{ color: passwordReg ? "white" : "red" }}>{ParolaError}</text>
-        <input type="text" placeholder="Confirm password" onChange = {(e) => {setRePasswordReg(e.target.value)}}></input>
+        <input type="password" placeholder="Confirm password" onChange = {(e) => {setRePasswordReg(e.target.value)}}></input>
                 <text style={{ color: repasswordReg ? "white" : "red" }}>{ReParolaError}</text>
-        <button  className="register" onClick={register}>Sign up</button>
+        <button  className="register" onClick={() => { register(); changeDisplay();}}>Sign up</button>
         </div>
         
     </div>}
-    </React.Fragment>
+</React.Fragment>
 );
 }
 
