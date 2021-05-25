@@ -53,7 +53,7 @@ export default class Homepage extends React.Component {
 		var parameters = new FormData();
 		parameters.append('username', this.state.username);
 		parameters.append('password', this.state.password);
-		axios.post('http://localhost/nokia/login.php', parameters).then((response) => {
+		axios.post('http://localhost/NOKIA-entire-project/php/login.php', parameters).then((response) => {
 
 			if (response.data == "You are logged in") {
 				variables.update({

@@ -147,10 +147,11 @@ h1 {
 }
 
 .borderLeft a {
-  color: white;
+  color: rgb(14, 78, 177);
+  font-weight: bold;
   font-size: calc(0.5rem + 1vw);
   margin-left: 10%;
-  font-style: italic;
+  font-style: normal;
   text-decoration: none;
   display: block;
   margin-bottom: 6%;
