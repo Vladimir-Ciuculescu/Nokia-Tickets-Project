@@ -5,12 +5,17 @@ import 'chartjs-plugin-labels';
 import pathString from '../../get_php_link.js'
 import { data_pie, data_bar, status_order, statuses, data_line, days } from './Constants';
 
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt, faFilePdf, faFileCsv } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PaginationTableComponent from '../../components/GraphsTable/Table';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './Graphs.css';
+
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
 
 const apiUrl = pathString + '/team3/graphs.php';
 
@@ -195,6 +200,42 @@ export default class Graphs extends React.Component {
       )
   }
 
+  exportPDF = () => {
+    const unit = "pt";
+    const size = "A4";
+    const orientation = "portrait";
+
+    const marginLeft = 40;
+    const doc = new jsPDF(orientation, unit, size);
+
+    doc.setFontSize(15);
+
+    const title = "Raport incidente (" + this.state.startDate.toJSON().slice(0, 10) + " : " + this.state.endDate.toJSON().slice(0, 10) + ")";
+    const headers = [["#ID", "Status", "Submit date", "Cat Tier"]];
+
+    const data = this.state.incidents.map(incident => (
+      [incident.INCIDENT_NUMBER, incident.STATUS, incident.SUBMIT_DATE, incident.CAT_TIER_1]
+    ));
+    let content = {
+      startY: 50,
+      head: headers,
+      body: data
+    };
+
+    doc.text(title, marginLeft, 40);
+    doc.autoTable(content);
+    doc.save("incidents.pdf")
+  }
+
+  exportCSV = () => {
+    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    const ws = XLSX.utils.json_to_sheet(this.state.incidents);
+    const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, "incidents.xlsx");
+  }
+
   render() {
     const { startDate, endDate, incidents } = this.state;
     const { getTable, updatePieChart } = this
@@ -253,6 +294,15 @@ export default class Graphs extends React.Component {
           <div ref={this.refTable} className="box-mod data-table" style={{ "display": "none" }}>
             <h3>Listă incidente</h3>
             <div className="big-table">
+              <div className="table-export">
+                <div class="dropdown">
+                  <button class="dropbtn">Exportă tabelul</button>
+                  <div class="dropdown-content">
+                    <a onClick={() => this.exportPDF()}><FontAwesomeIcon icon={faFilePdf} />  PDF</a>
+                    <a onClick={() => this.exportCSV()}><FontAwesomeIcon icon={faFileCsv} />  Excel</a>
+                  </div>
+                </div>
+              </div>
               <PaginationTableComponent table_data={incidents} />
             </div>
           </div>
