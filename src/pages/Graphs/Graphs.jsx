@@ -7,7 +7,7 @@ import { data_pie, data_bar, status_order, statuses, data_line, days } from './C
 
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import PaginationTableComponent from '../../components/GraphsTable/Table';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './Graphs.css';
@@ -201,81 +201,62 @@ export default class Graphs extends React.Component {
 
     return (
       <div className="graphs-page">
-      <div className="sub-page">
-        <div className="box-mod-actions">
-          <h3>Perioadă</h3>
-          <div className="actions-container">
-            <div>
-              <DatePicker dateFormat="dd.MM.yyyy" selected={startDate} onChange={(date) => this.handleChange(date, 'startDate')} />
-              <div className="calendar-icon"><FontAwesomeIcon icon={faCalendarAlt} /></div>
-            </div>
-            <div>
-              <DatePicker dateFormat="dd.MM.yyyy" selected={endDate} onChange={(date) => this.handleChange(date, 'endDate')} />
-              <div className="calendar-icon"><FontAwesomeIcon icon={faCalendarAlt} /></div>
-            </div>
-            <div>
-              <button id="1" className={`btn-small btn-small-${this.state.btns[1] ? 'on' : 'off'}`} onClick={this.handleClick}>
-                Daily
+        <div className="sub-page">
+          <div className="box-mod-actions">
+            <h3>Perioadă</h3>
+            <div className="actions-container">
+              <div>
+                <DatePicker dateFormat="dd.MM.yyyy" selected={startDate} onChange={(date) => this.handleChange(date, 'startDate')} />
+                <div className="calendar-icon"><FontAwesomeIcon icon={faCalendarAlt} /></div>
+              </div>
+              <div>
+                <DatePicker dateFormat="dd.MM.yyyy" selected={endDate} onChange={(date) => this.handleChange(date, 'endDate')} />
+                <div className="calendar-icon"><FontAwesomeIcon icon={faCalendarAlt} /></div>
+              </div>
+              <div>
+                <button id="1" className={`btn-small btn-small-${this.state.btns[1] ? 'on' : 'off'}`} onClick={this.handleClick}>
+                  Daily
             </button>
-              <button id="2" className={`btn-small btn-small-${this.state.btns[2] ? 'on' : 'off'}`} onClick={this.handleClick}>
-                Weekly
+                <button id="2" className={`btn-small btn-small-${this.state.btns[2] ? 'on' : 'off'}`} onClick={this.handleClick}>
+                  Weekly
             </button>
-              <button id="3" className={`btn-small btn-small-${this.state.btns[3] ? 'on' : 'off'}`} onClick={this.handleClick}>
-                Monthly
+                <button id="3" className={`btn-small btn-small-${this.state.btns[3] ? 'on' : 'off'}`} onClick={this.handleClick}>
+                  Monthly
             </button>
+              </div>
             </div>
-          </div>
 
-        </div>
-        <br></br>
-        <div className="grid-container">
-          <div className="box-mod">
-            <h3>Statistica incidentelor</h3>
-            <div className="graphContainer" style={{ "maxWidth": "720px" }}>
-              <Bar ref={(reference) => this.bar_chart = reference} redraw={true} data={data_bar} width={400} height={400} options={{ maintainAspectRatio: false, legend: { display: false }, plugins: { labels: { render: 'value' } }, onClick: function (evt, element) { if (element.length > 0) { var ind = element[0]._index; updatePieChart(ind, element[0]['_model'].label, element[0]['_model'].datasetLabel); } } }} />
+          </div>
+          <br></br>
+          <div className="grid-container">
+            <div className="box-mod">
+              <h3>Statistica incidentelor</h3>
+              <div className="graphContainer" style={{ "maxWidth": "720px" }}>
+                <Bar ref={(reference) => this.bar_chart = reference} redraw={true} data={data_bar} width={400} height={400} options={{ maintainAspectRatio: false, legend: { display: false }, plugins: { labels: { render: 'value' } }, onClick: function (evt, element) { if (element.length > 0) { var ind = element[0]._index; updatePieChart(ind, element[0]['_model'].label, element[0]['_model'].datasetLabel); } } }} />
+              </div>
+            </div>
+            <div className="box-mod">
+              <h3>Incidente {this.state.incidents_title}</h3>
+              <div className="graphContainer">
+                <Pie ref={(reference) => this.pie_chart = reference} redraw={true} data={data_pie} width={400} height={400} options={{ maintainAspectRatio: false, title: { display: true, text: 'Prioritate:' }, onClick: function (evt, element) { if (element.length > 0) { var ind = element[0]._index; getTable(ind); } }, plugins: { labels: { render: 'value', fontColor: '#ffffff', fontSize: 12 } } }} />
+              </div>
             </div>
           </div>
-          <div className="box-mod">
-            <h3>Incidente {this.state.incidents_title}</h3>
-            <div className="graphContainer">
-              <Pie ref={(reference) => this.pie_chart = reference} redraw={true} data={data_pie} width={400} height={400} options={{ maintainAspectRatio: false, title: { display: true, text: 'Prioritate:' }, onClick: function (evt, element) { if (element.length > 0) { var ind = element[0]._index; getTable(ind); } }, plugins: { labels: { render: 'value', fontColor: '#ffffff', fontSize: 12 } } }} />
+          <br></br>
+          <div className="box-mod big-graph">
+            <h3>Statistica soluționării incidentelor</h3>
+            <div className="graphContainer" style={{ "maxWidth": "1200px" }}>
+              <Line ref={(reference) => this.line_chart = reference} redraw={true} data={data_line} options={{ maintainAspectRatio: false, onClick: function (evt, element) { if (element.length > 0) { var ind = element[0]._index; console.log(data_line.labels[ind]); } } }} width={400} height={400} />
+            </div>
+          </div>
+          <br></br>
+          <div ref={this.refTable} className="box-mod data-table" style={{ "display": "none" }}>
+            <h3>Listă incidente</h3>
+            <div className="big-table">
+              <PaginationTableComponent table_data={incidents} />
             </div>
           </div>
         </div>
-        <br></br>
-        <div className="box-mod big-graph">
-          <h3>Statistica soluționării incidentelor</h3>
-          <div className="graphContainer" style={{ "maxWidth": "1200px" }}>
-            <Line ref={(reference) => this.line_chart = reference} redraw={true} data={data_line} options={{ maintainAspectRatio: false, onClick: function (evt, element) { if (element.length > 0) { var ind = element[0]._index; console.log(data_line.labels[ind]); } } }} width={400} height={400} />
-          </div>
-        </div>
-        <br></br>
-        <div ref={this.refTable} className="box-mod data-table" style={{ "display": "none" }}>
-          <h3>Listă incidente</h3>
-          <div className="big-table">
-            <table className="styled-table">
-              <thead>
-                <tr>
-                  <th>#ID</th>
-                  <th>Status</th>
-                  <th>Submit date</th>
-                  <th>Cat Tier</th>
-                </tr>
-              </thead>
-              <tbody>
-                {incidents.map(incident => (
-                  <tr key={incident.INCIDENT_NUMBER}>
-                    <td>{incident.INCIDENT_NUMBER}</td>
-                    <td>{incident.STATUS}</td>
-                    <td>{incident.SUBMIT_DATE}</td>
-                    <td>{incident.CAT_TIER_1}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
       </div>
     );
   }

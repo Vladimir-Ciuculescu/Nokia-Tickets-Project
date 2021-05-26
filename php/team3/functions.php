@@ -87,14 +87,14 @@
 		
 		if(!$start && !$end)
 		{
-			$stmt = $conn->prepare("SELECT [INCIDENT_NUMBER], [STATUS], [SUBMIT_DATE], [CAT_TIER_1]
+			$stmt = $conn->prepare("SELECT [INCIDENT_NUMBER], [STATUS], FORMAT([SUBMIT_DATE],'dd.MM.yyy HH:mm') AS SUBMIT_DATE, [CAT_TIER_1]
 								FROM [TEST].[TEAM3_INCIDENTS]
 								WHERE priority = :priority AND ".$status_query." AND DATEPART(year, GETDATE()) = DATEPART(year, [SUBMIT_DATE])
 								AND DATEPART(week, GETDATE()) = DATEPART(week, [SUBMIT_DATE])
 								ORDER BY [SUBMIT_DATE] ASC");
 			$stmt->bindparam(":priority", $priority);
 		} else {
-			$stmt = $conn->prepare("SELECT [INCIDENT_NUMBER], [STATUS], [SUBMIT_DATE], [CAT_TIER_1]
+			$stmt = $conn->prepare("SELECT [INCIDENT_NUMBER], [STATUS], FORMAT([SUBMIT_DATE],'dd.MM.yyy HH:mm') AS SUBMIT_DATE, [CAT_TIER_1]
 								FROM [TEST].[TEAM3_INCIDENTS]
 								WHERE priority = :priority AND ".$status_query." AND [SUBMIT_DATE] BETWEEN :start AND :end
 								ORDER BY [SUBMIT_DATE] ASC");
