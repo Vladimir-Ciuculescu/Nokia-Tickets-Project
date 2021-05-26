@@ -14,15 +14,14 @@ export default class Menu extends React.Component {
             <div className="Dashboard">
                 <div className = "outer-container">
                     <div className = "sidebar-left">
-                        <div className = "logo-dash">
+                        <div className = "logo-dash" style={{ background: `url(${process.env.PUBLIC_URL}/logo.png`, "background-size": "cover" }}>
                            
                         </div>
                         <ul className="menu">
                             <li><a href="/welcome"><FontAwesomeIcon icon={faHome} /> Home</a></li>
                             <li><a href="/welcome/grafice"><FontAwesomeIcon icon={faChartLine} /> Grafice</a></li>
                             <li><a href="/welcome/notificari"><FontAwesomeIcon icon={faBell} /> Notificări</a></li>
-                            <li><a href = "/welcome/setari"><FontAwesomeIcon icon = {faCog}></FontAwesomeIcon>Setari</a></li>
-                            <li><a href = "/">Aici</a></li>
+                            <li><a href = "/welcome/setari"><FontAwesomeIcon icon = {faCog}></FontAwesomeIcon> Setari</a></li>
 					    </ul>
                     </div>
                 </div>
