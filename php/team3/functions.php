@@ -12,7 +12,6 @@
 		];
 		if($per!=null)
 			$status_query.=" AND ".$selection[$periodicity]." = :periodicity";
-
 			
 		if(!$start && !$end)
 		{
@@ -72,12 +71,19 @@
 		return $result;
 	}
 	
-	function get_status_list_table($priority, $status=null, $start=null, $end=null) {
+	function get_status_list_table($priority, $status=null, $start=null, $end=null, $per=null, $periodicity=null) {
 		global $conn;
 
 		$status_query = "[STATUS]!='Resolved'";
 		if($status!=null)
 			$status_query = "[STATUS]='".$status."'";
+		$selection = [
+			1 => "FORMAT([SUBMIT_DATE],'dd.MM')",
+			2 => "DATEPART(week, [SUBMIT_DATE])",
+			3 => "FORMAT([SUBMIT_DATE],'MM.yyyy')",
+		];
+		if($per!=null)
+			$status_query.=" AND ".$selection[$periodicity]." = :periodicity";
 
 		if(!$start && !$end)
 		{
@@ -87,11 +93,15 @@
 								AND DATEPART(week, GETDATE()) = DATEPART(week, [SUBMIT_DATE])
 								ORDER BY [SUBMIT_DATE] ASC");
 			$stmt->bindparam(":priority", $priority);
+			if($per!=null)
+				$stmt->bindparam(":periodicity", $per);
 		} else {
 			$stmt = $conn->prepare("SELECT [INCIDENT_NUMBER], [STATUS], FORMAT([SUBMIT_DATE],'dd.MM.yyy HH:mm') AS SUBMIT_DATE, [CAT_TIER_1]
 								FROM [TEST].[INCIDENTS]
 								WHERE priority = :priority AND ".$status_query." AND [SUBMIT_DATE] BETWEEN :start AND :end
 								ORDER BY [SUBMIT_DATE] ASC");
+			if($per!=null)
+				$stmt->bindparam(":periodicity", $per);
 			$stmt->bindparam(":priority", $priority);
 			$stmt->bindparam(":start", $start);
 			$stmt->bindparam(":end", $end);

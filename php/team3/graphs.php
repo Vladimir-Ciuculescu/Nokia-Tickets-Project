@@ -30,7 +30,10 @@
 		$incident_type = isset($_POST['incident_type']) ? $_POST['incident_type'] : null;
 		$status = isset($statuses_order[$incident_type]) ? $statuses_order[$incident_type] : null;
 
-		$result = ['status' => 1, 'type' => $type, 'data' => get_status_list_table($priority, $status, $start, $end)];
+		$per = isset($_POST['per']) ? $_POST['per'] : null;
+		if(!$per)
+			$periodicity = null;
+		$result = ['status' => 1, 'type' => $type, 'data' => get_status_list_table($priority, $status, $start, $end, $per, $periodicity)];
 	} else if($type==3) {
 		$status = isset($_POST['status']) ? intval($_POST['status']) : null;
 		$per = isset($_POST['per']) ? $_POST['per'] : null;

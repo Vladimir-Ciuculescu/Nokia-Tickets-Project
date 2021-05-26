@@ -25,8 +25,7 @@ export const data_pie = {
 export const statuses = ['Desemnate', 'În progres', 'În așteptate', 'Anulate', 'Închise', 'Rezolvate'];
 export const data_bar = {
     labels: ['0', '0'],
-    datasets: [
-        {
+    datasets: [{
             label: 'Desemnate',
             data: [0, 0],
             backgroundColor: 'rgba(255, 99, 132, 0.6)',
@@ -96,8 +95,7 @@ export const months = ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iun
 export const days = ['Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă', 'Duminică'];
 export const data_line = {
     labels: days,
-    datasets: [
-        {
+    datasets: [{
             label: 'Rezolvate',
             fill: false,
             lineTension: 0.1,
@@ -142,3 +140,4 @@ export const data_line = {
     ]
 };
 export const status_order = { 'Assigned': 0, 'In progress': 1, 'Pending': 2, 'Cancelled': 3, 'Closed': 4, 'Resolved': 5 };
+export const data_type = [null, 'ziua', 'săptămâna', 'luna'];

@@ -2,7 +2,7 @@
     position: absolute;
     margin-left: 177px;
     margin-top: 70px;
-    min-width: 1342px;
+    width: calc(100% - 177px);
     background-color: white;
 }
 
@@ -196,7 +196,7 @@
 }
 
 .styled-table tr:first-child th[role=columnheader]:first-child,
-.styled-table tr:nth-child(3) {
+.styled-table thead tr:nth-child(3) {
     display: none;
 }
 
@@ -346,4 +346,16 @@ input.form-control {
 
 .table-export .dropdown:hover .dropbtn {
     background-color: #2c62c1;
+}
+
+.small-legend {
+    float: right;
+    position: absolute;
+    right: 10px;
+    margin-top: -15px;
+    font-size: 10px;
+}
+
+.size-graph3 {
+    padding-bottom: 5px
 }

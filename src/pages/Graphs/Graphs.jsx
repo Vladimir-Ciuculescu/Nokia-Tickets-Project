@@ -3,7 +3,7 @@ import React from 'react';
 import { Line, Pie, Bar } from 'react-chartjs-2';
 import 'chartjs-plugin-labels';
 import pathString from '../../get_php_link.js'
-import { data_pie, data_bar, status_order, statuses, data_line, days } from './Constants';
+import { data_pie, data_bar, status_order, statuses, data_line, data_type } from './Constants';
 
 import { faCalendarAlt, faFilePdf, faFileCsv } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -37,7 +37,9 @@ export default class Graphs extends React.Component {
       btn_active: 1,
       incidents: [],
       incident_type: null,
-      incidents_title: 'nerezolvate'
+      incidents_title: 'nerezolvate',
+      per: null,
+      current_legend: 'ziua'
     }
   }
 
@@ -48,7 +50,8 @@ export default class Graphs extends React.Component {
     btns[id] = true;
     this.setState(state => ({
       btns: btns,
-      btn_active: id
+      btn_active: id,
+      current_legend: data_type[id]
     }));
   }
 
@@ -94,7 +97,7 @@ export default class Graphs extends React.Component {
             this.setState({ error });
           }
         )
-      this.setState({ incident_type: null, incidents_title: 'nerezolvate' });
+      this.setState({ per: null, incident_type: null, incidents_title: 'nerezolvate' });
     }
   }
 
@@ -145,11 +148,14 @@ export default class Graphs extends React.Component {
   }
 
   updatePieChart(id, date, set) {
-    this.setState({ incident_type: statuses.indexOf(set), incidents_title: set.toString().toLowerCase() });
+    this.setState({ incident_type: statuses.indexOf(set), incidents_title: set.toString().toLowerCase() + " (" + data_type[this.state.btn_active] + " " + date + ")", per: date });
 
     var form_data = new FormData();
     form_data.append('type', 3);
     form_data.append('periodicity', this.state.btn_active);
+
+    form_data.append('start', this.state.startDate.toJSON().slice(0, 10));
+    form_data.append('end', this.state.endDate.toJSON().slice(0, 10));
 
     form_data.append('status', id);
     form_data.append('per', date);
@@ -178,6 +184,10 @@ export default class Graphs extends React.Component {
     form_data.append('priority', id);
     if (this.state.incident_type !== null)
       form_data.append('incident_type', this.state.incident_type);
+    if (this.state.per) {
+      form_data.append('periodicity', this.state.btn_active);
+      form_data.append('per', this.state.per);
+    }
     form_data.append('start', this.state.startDate.toJSON().slice(0, 10));
     form_data.append('end', this.state.endDate.toJSON().slice(0, 10));
     const requestOptions = {
@@ -213,7 +223,7 @@ export default class Graphs extends React.Component {
 
     doc.setFontSize(15);
 
-    const title = "Raport incidente (" + this.state.startDate.toJSON().slice(0, 10) + " : " + this.state.endDate.toJSON().slice(0, 10) + ")";
+    const title = "Raport incidente (" + this.state.startDate.toJSON().slice(0, 10) + " - " + this.state.endDate.toJSON().slice(0, 10) + ")";
     const headers = [["#ID", "Status", "Submit date", "Cat Tier"]];
 
     const data = this.state.incidents.map(incident => (
@@ -275,7 +285,7 @@ export default class Graphs extends React.Component {
           <div className="grid-container">
             <div className="box-mod">
               <h3>Statistica incidentelor</h3>
-              <div className="graphContainer" style={{ "maxWidth": "720px" }}>
+              <div className="graphContainer">
                 <Bar ref={(reference) => this.bar_chart = reference} redraw={true} data={data_bar} width={400} height={400}
                   options={{
                     maintainAspectRatio: false,
@@ -293,6 +303,7 @@ export default class Graphs extends React.Component {
                   }}
                 />
               </div>
+              <span className="small-legend">{this.state.current_legend}</span>
             </div>
             <div className="box-mod">
               <h3>Incidente {this.state.incidents_title}</h3>
@@ -304,9 +315,10 @@ export default class Graphs extends React.Component {
           <br></br>
           <div className="box-mod big-graph">
             <h3>Statistica soluționării incidentelor</h3>
-            <div className="graphContainer" style={{ "maxWidth": "1200px" }}>
+            <div className="graphContainer" className="size-graph3">
               <Line ref={(reference) => this.line_chart = reference} redraw={true} data={data_line} options={{ maintainAspectRatio: false, onClick: function (evt, element) { if (element.length > 0) { var ind = element[0]._index; console.log(data_line.labels[ind]); } } }} width={400} height={400} />
             </div>
+            <span className="small-legend">{this.state.current_legend}</span>
           </div>
           <br></br>
           <div ref={this.refTable} className="box-mod data-table" style={{ "display": "none" }}>
