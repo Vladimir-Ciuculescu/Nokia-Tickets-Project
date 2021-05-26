@@ -276,7 +276,22 @@ export default class Graphs extends React.Component {
             <div className="box-mod">
               <h3>Statistica incidentelor</h3>
               <div className="graphContainer" style={{ "maxWidth": "720px" }}>
-                <Bar ref={(reference) => this.bar_chart = reference} redraw={true} data={data_bar} width={400} height={400} options={{ maintainAspectRatio: false, legend: { display: false }, plugins: { labels: { render: 'value' } }, onClick: function (evt, element) { if (element.length > 0) { var ind = element[0]._index; updatePieChart(ind, element[0]['_model'].label, element[0]['_model'].datasetLabel); } } }} />
+                <Bar ref={(reference) => this.bar_chart = reference} redraw={true} data={data_bar} width={400} height={400}
+                  options={{
+                    maintainAspectRatio: false,
+                    legend: { display: false },
+                    plugins: { labels: { render: 'value' } },
+                    onClick: function (evt, element) {
+                      var bar_element = this.bar_chart.chartInstance.getElementAtEvent(evt);
+
+                      if (element.length > 0 && bar_element.length > 0) {
+                        var element_id = bar_element[0]._datasetIndex;
+
+                        updatePieChart(element_id, element[element_id]['_model'].label, element[element_id]['_model'].datasetLabel);
+                      }
+                    }.bind(this)
+                  }}
+                />
               </div>
             </div>
             <div className="box-mod">

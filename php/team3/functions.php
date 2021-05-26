@@ -1,25 +1,4 @@
 <?php
-	//DateAdd(DAY, 1, :start)
-	function get_date($type)
-	{
-		$d = strtotime("today");
-		$start = null;
-
-		switch ($type) {
-			case 2:
-				$start = date("Y-m-d", strtotime("last monday midnight", $d));
-				break;
-			case 3:
-				$start = date("Y-m-d", strtotime("first day of this month", $d));
-				break;
-			case 4:
-				$start = date('Y-m-d', strtotime('first day of january this year'));
-				break;
-		}
-
-		return ['start' => $start, 'end' => date("Y-m-d", $d)];
-	}
-
 	function get_incidents_by_status($periodicity, $per=null, $status=null, $start=null, $end=null) {
 		global $conn;
 

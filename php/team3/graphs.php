@@ -32,7 +32,7 @@
 
 		$result = ['status' => 1, 'type' => $type, 'data' => get_status_list_table($priority, $status, $start, $end)];
 	} else if($type==3) {
-		$status = isset($_POST['status']) ? intval($_POST['status']) : null; $status = 0;
+		$status = isset($_POST['status']) ? intval($_POST['status']) : null;
 		$per = isset($_POST['per']) ? $_POST['per'] : null;
 		$status = isset($statuses_order[$status]) ? $statuses_order[$status] : null;
 		
