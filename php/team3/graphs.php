@@ -10,6 +10,16 @@
 	$end = isset($_POST['end']) ? $_POST['end'] : null;
 	$statuses_order = ['Assigned', 'In progress', 'Pending', 'Cancelled', 'Closed', 'Resolved'];
 	
+	if($start!=null)//diferenta de timp
+	{
+		$date = new DateTime($start);
+		$date->modify('+1 day');
+		$start = $date->format('Y-m-d');
+
+		$date = new DateTime($end);
+		$date->modify('+1 day');
+		$end = $date->format('Y-m-d');
+	}
 	$result = ['status' => 0, 'message' => 'Datele introduse nu sunt valide.'];
 
 	if($type==1)

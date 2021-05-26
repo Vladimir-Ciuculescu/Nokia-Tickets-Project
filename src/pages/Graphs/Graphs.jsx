@@ -111,6 +111,9 @@ export default class Graphs extends React.Component {
     form_data.append('type', 1);
     form_data.append('periodicity', 1);
 
+    form_data.append('start', this.state.startDate.toJSON().slice(0, 10));
+    form_data.append('end', this.state.endDate.toJSON().slice(0, 10));
+
     const requestOptions = {
       method: 'POST',
       body: form_data

@@ -170,11 +170,11 @@ function Table({ columns, data }) {
                         onChange={e => {
                             setPageSize(Number(e.target.value))
                         }}
-                        style={{ width: '120px', height: '36px', "border-radius": "0 4px 4px 0", float: "right", "margin-left": "-1px"}}
+                        style={{ width: '110px', height: '36px', "border-radius": "0 4px 4px 0", float: "right", "margin-left": "-1px"}}
                     >
                         {[5, 10, 15, 20, 30, 40, 50].map(pageSize => (
                             <option key={pageSize} value={pageSize}>
-                                Pagina {pageSize}
+                                {pageSize} rânduri
                             </option>
                         ))}
                     </select>
