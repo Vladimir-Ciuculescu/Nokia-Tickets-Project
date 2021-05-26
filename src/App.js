@@ -48,10 +48,8 @@ export default class App extends Component {
         <Router>
 
           <Switch>
-            <Route exact path="/">
-              <Homepage></Homepage>
-            </Route>
-            <Route exact path="/welcome" render={() => this.state.LoginStatus ? (<WelcomePage></WelcomePage>) : (<Redirect to="/"></Redirect>)}></Route>
+            <Route exact path = "/" component = {Homepage} />
+            <Route path = "/welcome" component = {WelcomePage} />
           </Switch>
 
         </Router>
@@ -64,4 +62,3 @@ export default class App extends Component {
 }
 
 
-a

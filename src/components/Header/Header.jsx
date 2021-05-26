@@ -19,7 +19,9 @@ export default class Header extends React.Component {
 
   state = {
     row: [],
-    toggleNotifications:false,
+    toggleNotifications: false,
+    nume: localStorage.getItem('name'),
+    prenume: localStorage.getItem('surname'),
       
     }
 
@@ -74,7 +76,7 @@ export default class Header extends React.Component {
               
               
                     <IoMdNotifications className = "icon notification-icon" onClick = {() => this.showNotificationsContainer()}></IoMdNotifications>
-                    <text className = "profile-name">John Doe</text>
+              <text className="profile-name">{this.state.prenume +  " " +this.state.nume}</text>
                     <CgProfile className = "icon profile-icon"></CgProfile>
                     
                    
