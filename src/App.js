@@ -7,6 +7,8 @@ import React, { Component } from "react";
 import Menu from "./components/Menu/Menu.jsx";
 import fb from './Firebase';
 import firestore from '@firebase/firestore';
+import NotFound from "./pages/NotFound/NotFound.jsx";
+import './App.css'
 
 
 var variables = fb
@@ -49,7 +51,8 @@ export default class App extends Component {
 
           <Switch>
             <Route exact path = "/" component = {Homepage} />
-            <Route path = "/welcome" component = {WelcomePage} />
+            <Route path="/welcome" component={WelcomePage} />
+            <Route path = "/admin" component = {NotFound} />
           </Switch>
 
         </Router>

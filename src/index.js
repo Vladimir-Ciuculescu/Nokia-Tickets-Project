@@ -7,12 +7,14 @@ import App from './App';
 import DashBoard from './pages/DashBoardPage/DashBoardPage.jsx'
 import reportWebVitals from './reportWebVitals';
 import WelcomePage from './pages/WelcomePage/WelcomePage';
+import NotFound from './pages/NotFound/NotFound';
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route exact path="/" component={App} />
-      <Route path="/welcome" component={WelcomePage}/>
+      <Route path="/welcome" component={WelcomePage} />
+      <Route path = "*" component = {NotFound} />
     </Switch>
   </BrowserRouter>,
   document.getElementById('root')

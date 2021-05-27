@@ -1,11 +1,25 @@
-.App,
+/*.App,
 html {
+  background-color: hotpink;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+*/
+
+.App {
   background-color: rgb(14, 78, 177);
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
 }
+html {
+  background-color: #124191;
+}
+
 h1,
 h2 {
   margin: 0;

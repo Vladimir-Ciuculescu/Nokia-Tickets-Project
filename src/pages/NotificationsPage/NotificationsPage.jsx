@@ -53,7 +53,7 @@ export default class NotificationsPage extends React.Component{
         }
         var payload = new FormData();
         payload.append('Priority',this.state.Priority);
-        axios.post('http://localhost/echipa4-php/introduce.php',payload).then(res=>{
+        axios.post('http://localhost/NOKIA-entire-project/php/team4/introduce.php',payload).then(res=>{
             this.setState({data:res.data});
         });
 
@@ -63,7 +63,8 @@ export default class NotificationsPage extends React.Component{
         }
         var payload = new FormData();
         payload.append('Mesaj',this.state.Mesaj);
-        axios.post('http://localhost/echipa4-php/adauga_notificare.php',payload).then(res=>{
+        payload.append('Priority',this.state.Priority);
+        axios.post('http://localhost/NOKIA-entire-project/php/team4/adauga_notificare.php',payload).then(res=>{
             this.setState({data:res.data});
         });
 

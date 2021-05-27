@@ -96,41 +96,21 @@ export default class Homepage extends React.Component {
 		this.setState({
 			[e.target.name]:e.target.value
 		})
-	}
-
-	
-	
-	
-	
+	}	
 	render(){
-
 		
-		
-		
-		
-
-		/*
-		
-
-		axios.post('http://localhost/nokia/getPrenume.php', parameters).then((response) => {
-			
-			this.setState({ prenume: response.data });
-		})
-		*/
-
-			
-
 		if (this.state.loggedIn) {
 			return <Redirect to = "/welcome"></Redirect>
 		}
 
 			return (
 				<div className="App">
-        <div className="header"></div>
+        			<div className="header"></div>
                 <div className="container">
                 <div className="logoAndCreateContainer">
 				<img className="logoNokia" src="https://i.ibb.co/QJ1JWZ9/staff.png" alt="staff" border="0" />
-                  <a onClick={()=>this.setState({showPopup:true})} className = "create-account">Create new account</a>
+							<a onClick={() => this.setState({ showPopup: true })} className="create-account">Create new account</a>
+							<text></text>
                 </div>
                 <div className="signInDiv">
                 <div className="borderLeft">
@@ -145,14 +125,69 @@ export default class Homepage extends React.Component {
 										className="textbox1"
                        					onChange={(e)=>{this.setState({password:e.target.value});}}/>
 								<input type = "submit" className = "login" value = "Login"></input>
+									<ul>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+										<li>awdaw</li>
+								</ul>
 								</form>
                 <h2>{this.state.loginStatus}</h2>
                 </div>
                 </div>
                 </div>
 					<div className="footer"></div>
-					<Popup parentcallback = {this.handlePopup} displayProperty={this.state.showPopup}></Popup>
+					<Popup parentcallback={this.handlePopup} displayProperty={this.state.showPopup}></Popup>
+					
 
+					
 					
             </div>
 			)

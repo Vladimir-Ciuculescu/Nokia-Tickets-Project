@@ -3,14 +3,19 @@ import React from 'react';
 import { Line, Pie, Bar } from 'react-chartjs-2';
 import 'chartjs-plugin-labels';
 import pathString from '../../get_php_link.js'
-import { data_pie, data_bar, status_order, statuses, data_line, days } from './Constants';
+import { data_pie, data_bar, status_order, statuses, data_line, data_type } from './Constants';
 
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt, faFilePdf, faFileCsv } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import PaginationTableComponent from '../../components/GraphsTable/Table';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './Graphs.css';
+
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
 
 const apiUrl = pathString + '/team3/graphs.php';
 
@@ -32,7 +37,9 @@ export default class Graphs extends React.Component {
       btn_active: 1,
       incidents: [],
       incident_type: null,
-      incidents_title: 'nerezolvate'
+      incidents_title: 'nerezolvate',
+      per: null,
+      current_legend: 'ziua'
     }
   }
 
@@ -43,7 +50,8 @@ export default class Graphs extends React.Component {
     btns[id] = true;
     this.setState(state => ({
       btns: btns,
-      btn_active: id
+      btn_active: id,
+      current_legend: data_type[id]
     }));
   }
 
@@ -89,7 +97,7 @@ export default class Graphs extends React.Component {
             this.setState({ error });
           }
         )
-      this.setState({ incident_type: null, incidents_title: 'nerezolvate' });
+      this.setState({ per: null, incident_type: null, incidents_title: 'nerezolvate' });
     }
   }
 
@@ -105,6 +113,9 @@ export default class Graphs extends React.Component {
     var form_data = new FormData();
     form_data.append('type', 1);
     form_data.append('periodicity', 1);
+
+    form_data.append('start', this.state.startDate.toJSON().slice(0, 10));
+    form_data.append('end', this.state.endDate.toJSON().slice(0, 10));
 
     const requestOptions = {
       method: 'POST',
@@ -137,11 +148,14 @@ export default class Graphs extends React.Component {
   }
 
   updatePieChart(id, date, set) {
-    this.setState({ incident_type: statuses.indexOf(set), incidents_title: set.toString().toLowerCase() });
+    this.setState({ incident_type: statuses.indexOf(set), incidents_title: set.toString().toLowerCase() + " (" + data_type[this.state.btn_active] + " " + date + ")", per: date });
 
     var form_data = new FormData();
     form_data.append('type', 3);
     form_data.append('periodicity', this.state.btn_active);
+
+    form_data.append('start', this.state.startDate.toJSON().slice(0, 10));
+    form_data.append('end', this.state.endDate.toJSON().slice(0, 10));
 
     form_data.append('status', id);
     form_data.append('per', date);
@@ -170,6 +184,10 @@ export default class Graphs extends React.Component {
     form_data.append('priority', id);
     if (this.state.incident_type !== null)
       form_data.append('incident_type', this.state.incident_type);
+    if (this.state.per) {
+      form_data.append('periodicity', this.state.btn_active);
+      form_data.append('per', this.state.per);
+    }
     form_data.append('start', this.state.startDate.toJSON().slice(0, 10));
     form_data.append('end', this.state.endDate.toJSON().slice(0, 10));
     const requestOptions = {
@@ -195,87 +213,130 @@ export default class Graphs extends React.Component {
       )
   }
 
+  exportPDF = () => {
+    const unit = "pt";
+    const size = "A4";
+    const orientation = "portrait";
+
+    const marginLeft = 40;
+    const doc = new jsPDF(orientation, unit, size);
+
+    doc.setFontSize(15);
+
+    const title = "Raport incidente (" + this.state.startDate.toJSON().slice(0, 10) + " - " + this.state.endDate.toJSON().slice(0, 10) + ")";
+    const headers = [["#ID", "Status", "Submit date", "Cat Tier"]];
+
+    const data = this.state.incidents.map(incident => (
+      [incident.INCIDENT_NUMBER, incident.STATUS, incident.SUBMIT_DATE, incident.CAT_TIER_1]
+    ));
+    let content = {
+      startY: 50,
+      head: headers,
+      body: data
+    };
+
+    doc.text(title, marginLeft, 40);
+    doc.autoTable(content);
+    doc.save("incidents.pdf")
+  }
+
+  exportCSV = () => {
+    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    const ws = XLSX.utils.json_to_sheet(this.state.incidents);
+    const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, "incidents.xlsx");
+  }
+
   render() {
     const { startDate, endDate, incidents } = this.state;
     const { getTable, updatePieChart } = this
 
     return (
       <div className="graphs-page">
-      <div className="sub-page">
-        <div className="box-mod-actions">
-          <h3>Perioadă</h3>
-          <div className="actions-container">
-            <div>
-              <DatePicker dateFormat="dd.MM.yyyy" selected={startDate} onChange={(date) => this.handleChange(date, 'startDate')} />
-              <div className="calendar-icon"><FontAwesomeIcon icon={faCalendarAlt} /></div>
-            </div>
-            <div>
-              <DatePicker dateFormat="dd.MM.yyyy" selected={endDate} onChange={(date) => this.handleChange(date, 'endDate')} />
-              <div className="calendar-icon"><FontAwesomeIcon icon={faCalendarAlt} /></div>
-            </div>
-            <div>
-              <button id="1" className={`btn-small btn-small-${this.state.btns[1] ? 'on' : 'off'}`} onClick={this.handleClick}>
-                Daily
+        <div className="sub-page">
+          <div className="box-mod-actions">
+            <h3>Perioadă</h3>
+            <div className="actions-container">
+              <div>
+                <DatePicker dateFormat="dd.MM.yyyy" selected={startDate} onChange={(date) => this.handleChange(date, 'startDate')} />
+                <div className="calendar-icon"><FontAwesomeIcon icon={faCalendarAlt} /></div>
+              </div>
+              <div>
+                <DatePicker dateFormat="dd.MM.yyyy" selected={endDate} onChange={(date) => this.handleChange(date, 'endDate')} />
+                <div className="calendar-icon"><FontAwesomeIcon icon={faCalendarAlt} /></div>
+              </div>
+              <div>
+                <button id="1" className={`btn-small btn-small-${this.state.btns[1] ? 'on' : 'off'}`} onClick={this.handleClick}>
+                  Daily
             </button>
-              <button id="2" className={`btn-small btn-small-${this.state.btns[2] ? 'on' : 'off'}`} onClick={this.handleClick}>
-                Weekly
+                <button id="2" className={`btn-small btn-small-${this.state.btns[2] ? 'on' : 'off'}`} onClick={this.handleClick}>
+                  Weekly
             </button>
-              <button id="3" className={`btn-small btn-small-${this.state.btns[3] ? 'on' : 'off'}`} onClick={this.handleClick}>
-                Monthly
+                <button id="3" className={`btn-small btn-small-${this.state.btns[3] ? 'on' : 'off'}`} onClick={this.handleClick}>
+                  Monthly
             </button>
+              </div>
             </div>
-          </div>
 
-        </div>
-        <br></br>
-        <div className="grid-container">
-          <div className="box-mod">
-            <h3>Statistica incidentelor</h3>
-            <div className="graphContainer" style={{ "maxWidth": "720px" }}>
-              <Bar ref={(reference) => this.bar_chart = reference} redraw={true} data={data_bar} width={400} height={400} options={{ maintainAspectRatio: false, legend: { display: false }, plugins: { labels: { render: 'value' } }, onClick: function (evt, element) { if (element.length > 0) { var ind = element[0]._index; updatePieChart(ind, element[0]['_model'].label, element[0]['_model'].datasetLabel); } } }} />
+          </div>
+          <br></br>
+          <div className="grid-container">
+            <div className="box-mod">
+              <h3>Statistica incidentelor</h3>
+              <div className="graphContainer">
+                <Bar ref={(reference) => this.bar_chart = reference} redraw={true} data={data_bar} width={400} height={400}
+                  options={{
+                    maintainAspectRatio: false,
+                    legend: { display: false },
+                    plugins: { labels: { render: 'value' } },
+                    onClick: function (evt, element) {
+                      var bar_element = this.bar_chart.chartInstance.getElementAtEvent(evt);
+
+                      if (element.length > 0 && bar_element.length > 0) {
+                        var element_id = bar_element[0]._datasetIndex;
+
+                        updatePieChart(element_id, element[element_id]['_model'].label, element[element_id]['_model'].datasetLabel);
+                      }
+                    }.bind(this)
+                  }}
+                />
+              </div>
+              <span className="small-legend">{this.state.current_legend}</span>
+            </div>
+            <div className="box-mod">
+              <h3>Incidente {this.state.incidents_title}</h3>
+              <div className="graphContainer">
+                <Pie ref={(reference) => this.pie_chart = reference} redraw={true} data={data_pie} width={400} height={400} options={{ maintainAspectRatio: false, title: { display: true, text: 'Prioritate:' }, onClick: function (evt, element) { if (element.length > 0) { var ind = element[0]._index; getTable(ind); } }, plugins: { labels: { render: 'value', fontColor: '#ffffff', fontSize: 12 } } }} />
+              </div>
             </div>
           </div>
-          <div className="box-mod">
-            <h3>Incidente {this.state.incidents_title}</h3>
-            <div className="graphContainer">
-              <Pie ref={(reference) => this.pie_chart = reference} redraw={true} data={data_pie} width={400} height={400} options={{ maintainAspectRatio: false, title: { display: true, text: 'Prioritate:' }, onClick: function (evt, element) { if (element.length > 0) { var ind = element[0]._index; getTable(ind); } }, plugins: { labels: { render: 'value', fontColor: '#ffffff', fontSize: 12 } } }} />
+          <br></br>
+          <div className="box-mod big-graph">
+            <h3>Statistica soluționării incidentelor</h3>
+            <div className="graphContainer" className="size-graph3">
+              <Line ref={(reference) => this.line_chart = reference} redraw={true} data={data_line} options={{ maintainAspectRatio: false, onClick: function (evt, element) { if (element.length > 0) { var ind = element[0]._index; console.log(data_line.labels[ind]); } } }} width={400} height={400} />
+            </div>
+            <span className="small-legend">{this.state.current_legend}</span>
+          </div>
+          <br></br>
+          <div ref={this.refTable} className="box-mod data-table" style={{ "display": "none" }}>
+            <h3>Listă incidente</h3>
+            <div className="big-table">
+              <div className="table-export">
+                <div class="dropdown">
+                  <button class="dropbtn">Exportă tabelul</button>
+                  <div class="dropdown-content">
+                    <a onClick={() => this.exportPDF()}><FontAwesomeIcon icon={faFilePdf} />  PDF</a>
+                    <a onClick={() => this.exportCSV()}><FontAwesomeIcon icon={faFileCsv} />  Excel</a>
+                  </div>
+                </div>
+              </div>
+              <PaginationTableComponent table_data={incidents} />
             </div>
           </div>
         </div>
-        <br></br>
-        <div className="box-mod big-graph">
-          <h3>Statistica soluționării incidentelor</h3>
-          <div className="graphContainer" style={{ "maxWidth": "1200px" }}>
-            <Line ref={(reference) => this.line_chart = reference} redraw={true} data={data_line} options={{ maintainAspectRatio: false, onClick: function (evt, element) { if (element.length > 0) { var ind = element[0]._index; console.log(data_line.labels[ind]); } } }} width={400} height={400} />
-          </div>
-        </div>
-        <br></br>
-        <div ref={this.refTable} className="box-mod data-table" style={{ "display": "none" }}>
-          <h3>Listă incidente</h3>
-          <div className="big-table">
-            <table className="styled-table">
-              <thead>
-                <tr>
-                  <th>#ID</th>
-                  <th>Status</th>
-                  <th>Submit date</th>
-                  <th>Cat Tier</th>
-                </tr>
-              </thead>
-              <tbody>
-                {incidents.map(incident => (
-                  <tr key={incident.INCIDENT_NUMBER}>
-                    <td>{incident.INCIDENT_NUMBER}</td>
-                    <td>{incident.STATUS}</td>
-                    <td>{incident.SUBMIT_DATE}</td>
-                    <td>{incident.CAT_TIER_1}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
       </div>
     );
   }

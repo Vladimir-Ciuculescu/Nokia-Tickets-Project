@@ -32,7 +32,11 @@ export default class Menu extends React.Component {
                             <li><a href = "/welcome/setari"><FontAwesomeIcon icon = {faCog}></FontAwesomeIcon>Setari</a></li>
                             <li><Link to = "/" onClick = {() => this.removeUser()}><BiLogOut></BiLogOut>Logout</Link></li>
 					    </ul>
+
+                        
                     </div>
+
+                    
                 </div>
 
                 

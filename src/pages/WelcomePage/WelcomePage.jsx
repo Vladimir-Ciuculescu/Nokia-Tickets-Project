@@ -43,6 +43,7 @@ export default class WelcomePage extends React.Component {
             <div className = "welcome-page-container">
                     
                         <Menu></Menu>
+                        
                         <Header></Header>
                         <NotificationsContainer></NotificationsContainer>
                

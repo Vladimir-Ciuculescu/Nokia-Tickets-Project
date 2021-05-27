@@ -15,8 +15,10 @@ var variables = fb
 	.doc('variables');
 
 
+
 export default class Header extends React.Component {
 
+  /*
   state = {
     row: [],
     toggleNotifications: false,
@@ -24,9 +26,19 @@ export default class Header extends React.Component {
     prenume: localStorage.getItem('surname'),
       
     }
+    */
 
     constructor(props) {
     super(props);
+
+    this.state = {
+    row: [],
+    toggleNotifications: false,
+      nume:localStorage.getItem('name'),
+    //nume: localStorage.getItem('name'),
+      prenume: localStorage.getItem('surname'),
+      
+    }
 
       variables.onSnapshot(doc => {
         this.setState({

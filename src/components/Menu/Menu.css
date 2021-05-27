@@ -1,7 +1,8 @@
 .Dashboard {
-  height: 100vh;
   background-color: #124191;
   width: 200px;
+  overflow: auto;
+  height: 100%;
 }
 
 .logo-dash {
