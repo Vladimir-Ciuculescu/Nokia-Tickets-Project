@@ -125,59 +125,7 @@ export default class Homepage extends React.Component {
 										className="textbox1"
                        					onChange={(e)=>{this.setState({password:e.target.value});}}/>
 								<input type = "submit" className = "login" value = "Login"></input>
-									<ul>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-										<li>awdaw</li>
-								</ul>
+									
 								</form>
                 <h2>{this.state.loginStatus}</h2>
                 </div>

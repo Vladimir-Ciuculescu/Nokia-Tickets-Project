@@ -31,79 +31,82 @@ function Popup(props) {
 
     const register = () => {
 
+
+        var check = true;
+
         //Nume eroare
         if (NameError == "") {
             SetNameError("Acest camp trebuie completat")
+            check = false;
 
         }
         //Prenume eroare
         if (SurnameError == "") {
             SetSurnameError("Acest camp trebuie completat")
-
+            check = false;
             
         }
 
         //Email eroare
         if (EmailError == "") {
             SetEmailError("Acest camp trebuie completat")
-
+             check = false;
             
         }
 
         //Telefon eroare
         if (TelephoneError== "") {
             SetTelephoneError("Acest camp trebuie completat")
-
+             check = false;
             
         }
 
         //Adresa eroare
         if (AddressError == "") {
             SetAddressError("Acest camp trebuie completat")
-
+             check = false;
            
         }
 
         //Data de nastere eroare
         if (BirthdateError == "") {
             SetBirthDateError("Acest camp trebuie completat")
-
+             check = false;
             
         }
 
         //Gen eroare
         if (GenderError == "") {
             SetGenderError("Acest camp trebuie completat")
-
-           
+             check = false;
+            
         }
 
         //Username eroare
         if (usernameReg == "") {
             SetUsernameError("Acest camp trebuie completat")
-
+             check = false;
             
         }
 
         //Parola eroare
         if (ParolaError == "") {
             SetParolaError("Acest camp trebuie completat")
-
+             check = false;
             
         }
 
         //Reparola eroare
         if (ReParolaError == "") {
             SetReParolaError("Acest camp trebuie completat")
-
-           
+             check = false;
+            
         }
 
 
 
-
-         {
-            console.log(NameError);
+        if(check){
+            
       
               let parameters = new FormData();
         parameters.append('name',nameReg);
@@ -119,7 +122,8 @@ function Popup(props) {
                 parameters
             ).then((response) => {
             
-        });
+            });
+            
         }
 
       
