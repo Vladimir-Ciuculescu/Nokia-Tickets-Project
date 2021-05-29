@@ -8,8 +8,20 @@
   align-items: center;
   height: 90%;
   width: 30%;
-  overflow-y: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
+
+.containerPop::-webkit-scrollbar {
+  width: 8px; /* width of the entire scrollbar */
+}
+
+.containerPop::-webkit-scrollbar-thumb {
+  background-color: gray; /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+  border: 2px solid transparent; /* creates padding around scroll thumb */
+}
+
 .containerPop h1 {
   color: rgb(2, 60, 187);
   text-align: center;
@@ -45,6 +57,7 @@
   padding: 1%;
   font-size: calc(0.3rem + 0.9vw);
   font-weight: bold;
+  outline: none;
 }
 #overlay {
   z-index: 1;
@@ -67,4 +80,5 @@
   color: white;
   font-weight: bold;
   width: 4%;
+  outline: none;
 }

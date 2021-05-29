@@ -8,6 +8,8 @@ import SettingsPage from '../SettingsPage/SettingsPage';
 import NotificationsPage from '../NotificationsPage/NotificationsPage';
 import Graphs from '../Graphs/Graphs'
 import NotificationsContainer from '../../components/NotificationsContainer/NotificationsContainer';
+import MainPage from '../MainPage/MainPage';
+
 
 export default class WelcomePage extends React.Component {
 
@@ -16,6 +18,7 @@ export default class WelcomePage extends React.Component {
         super(props);
 
         const token = localStorage.getItem("user");
+        
 
         let loggedIn = true
         if (token == null) {
@@ -23,14 +26,20 @@ export default class WelcomePage extends React.Component {
         }
 
         this.state = {
-            loggedIn:loggedIn,
+            loggedIn: loggedIn,
+           
         }
         
     }
 
-    
+    componentDidUpdate() {
+        
+        this.setState({ name: this.props.name });
+    }
 
     render() {
+
+        console.log(this.props.name);
 
         if (this.state.loggedIn === false) {
             return <Redirect to ="/" />
@@ -40,12 +49,13 @@ export default class WelcomePage extends React.Component {
 
 
             
+            
             <div className = "welcome-page-container">
                     
                         <Menu></Menu>
-                        
                         <Header></Header>
                         <NotificationsContainer></NotificationsContainer>
+                        <MainPage></MainPage>
                
                     
                 
@@ -53,6 +63,7 @@ export default class WelcomePage extends React.Component {
 
                 <BrowserRouter>
                     <Switch>
+                        
                         <Route path = "/welcome/notificari" component = {NotificationsPage}></Route>
                         <Route path="/welcome/setari" component={SettingsPage} />
                         <Route path ="/welcome/grafice" component = {Graphs} />

@@ -7,7 +7,16 @@ export default class NotFound extends React.Component {
         return (
             
             <div className = "page-not-found">
-                <text>Ne pare rau, pagina pe care incerci sa o accesezi nu exista !</text>
+
+                <div className = "message">
+                    <text>Ne pare rau, <br></br>pagina pe care incercati sa o accesati nu exista !</text>
+                </div>
+
+                <img className = "img" src="https://i.ibb.co/xCh0knb/NOT-FOUND.png"
+                        alt="NOT-FOUND"
+                        border="0">
+                    </img>
+
             </div>
         )
     }

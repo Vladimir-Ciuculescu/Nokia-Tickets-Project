@@ -8,13 +8,16 @@ import axios from 'axios';
 import NotificationsContainer from '../NotificationsContainer/NotificationsContainer';
 import fb from '../../Firebase.js';
 import firestore from '@firebase/firestore';
+import NotificationBadge from 'react-notification-badge';
+import { Effect } from 'react-notification-badge';
+import { name} from '../../pages/HomePage/HomePage';
 
 var variables = fb
 	.firestore()
 	.collection("NOKIA")
 	.doc('variables');
 
-
+var nume;
 
 export default class Header extends React.Component {
 
@@ -29,14 +32,13 @@ export default class Header extends React.Component {
     */
 
     constructor(props) {
-    super(props);
+      super(props);
+      
+      const name = localStorage.getItem("name");
 
     this.state = {
     row: [],
     toggleNotifications: false,
-      nume:localStorage.getItem('name'),
-    //nume: localStorage.getItem('name'),
-      prenume: localStorage.getItem('surname'),
       
     }
 
@@ -47,11 +49,10 @@ export default class Header extends React.Component {
       })
       
     
- }
-
+  }
+  
     componentDidMount()
     {
-
         axios.get('http://localhost/react-php/citeste_notificare.php')
           .then( response =>{
             console.log(response);
@@ -75,8 +76,12 @@ export default class Header extends React.Component {
 				});
   }
 
+ 
   render() {
       
+   
+
+    console.log(localStorage);
 
         
         return (
@@ -87,9 +92,13 @@ export default class Header extends React.Component {
 
               
               
-                    <IoMdNotifications className = "icon notification-icon" onClick = {() => this.showNotificationsContainer()}></IoMdNotifications>
-              <text className="profile-name">{this.state.prenume +  " " +this.state.nume}</text>
+                    <NotificationBadge className ="notifications-number" count={4} /><IoMdNotifications className = "icon notification-icon" onClick = {() => this.showNotificationsContainer()}></IoMdNotifications>
+                    <text className="profile-name">{`${localStorage.getItem("name")} ${localStorage.getItem("surname")}`}</text>
+              
                     <CgProfile className = "icon profile-icon"></CgProfile>
+                  
+               
+                    
                     
                    
                     

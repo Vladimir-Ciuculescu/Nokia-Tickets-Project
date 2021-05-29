@@ -6,6 +6,8 @@ import { useHistory, Link, Redirect } from 'react-router-dom';
 import Popup from '../../components/RegisterPopup/RegisterPopup';
 import fb from '../../Firebase'
 import firestore from '@firebase/firestore';
+import {reactLocalStorage} from 'reactjs-localstorage';
+
 
 
 var variables = fb
@@ -13,6 +15,9 @@ var variables = fb
 	.collection("NOKIA")
 	.doc('variables');
 
+var NOKIA = fb.firestore().collection("NOKIA");
+
+export var name;
 
 
 export default class Homepage extends React.Component {
@@ -21,6 +26,7 @@ export default class Homepage extends React.Component {
 		super(props);
 
 		const token = localStorage.getItem("user");
+		
 
 		let loggedIn = true
         if (token == null) {
@@ -53,6 +59,8 @@ export default class Homepage extends React.Component {
 
 	handleLogin(event) {
 
+		
+
 		event.preventDefault();
 		var parameters = new FormData();
 		parameters.append('username', this.state.username);
@@ -73,15 +81,18 @@ export default class Homepage extends React.Component {
 			//Primteste numele
 			axios.post('http://localhost/nokia/getNume.php', parameters).then((response) => {
 			
+				this.props.parentCallback({name:response.data})
+				reactLocalStorage.set("name", response.data);
 				localStorage.setItem('name', response.data);
-				console.log(localStorage);
+				
 			})
 
 			//Primeste prenumele
 			axios.post('http://localhost/nokia/getPrenume.php', parameters).then((response) => {
-			
+				this.props.parentCallback({prenume:response.data})
+				reactLocalStorage.set("surname", response.data);
 				localStorage.setItem('surname', response.data);
-				console.log(localStorage);
+				
 		})
 		},  
 		)
@@ -105,7 +116,7 @@ export default class Homepage extends React.Component {
 
 			return (
 				<div className="App">
-        			<div className="header"></div>
+        			
                 <div className="container">
                 <div className="logoAndCreateContainer">
 				<img className="logoNokia" src="https://i.ibb.co/QJ1JWZ9/staff.png" alt="staff" border="0" />
@@ -131,7 +142,7 @@ export default class Homepage extends React.Component {
                 </div>
                 </div>
                 </div>
-					<div className="footer"></div>
+					
 					<Popup parentcallback={this.handlePopup} displayProperty={this.state.showPopup}></Popup>
 					
 

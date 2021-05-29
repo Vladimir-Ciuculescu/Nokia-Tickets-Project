@@ -1,0 +1,16 @@
+li {
+  list-style-type: none;
+}
+
+.table {
+  display: flex;
+}
+
+.table tr {
+  display: block;
+  float: left;
+}
+
+.table td {
+  display: block;
+}

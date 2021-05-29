@@ -10,6 +10,12 @@
   margin-right: 60px;
 }
 
+.notifications-number {
+  margin-right: 263px;
+  z-index: 3;
+  margin-top: 3px;
+}
+
 .profile-name {
   font-size: 24px;
 }

@@ -21,6 +21,7 @@ export default class App extends Component {
 
   state = {
     LoginStatus: false,
+   
   }
 
   constructor(props) {
@@ -36,9 +37,13 @@ export default class App extends Component {
   }
 
 
+  handleCallback = (childData) => {
+      this.setState({userinfo:childData});
+  }
 
   render() {
 
+    
 
 
     console.log(this.state.LoginStatus);
@@ -47,12 +52,17 @@ export default class App extends Component {
     return (
       <div className="App">
 
+        
+
         <Router>
 
           <Switch>
-            <Route exact path = "/" component = {Homepage} />
-            <Route path="/welcome" component={WelcomePage} />
-            <Route path = "/admin" component = {NotFound} />
+            
+            <Route exact path="/" component={() => <Homepage parentCallback = {this.handleCallback}  />} />
+            <Route path="/welcome" component= {() => <WelcomePage name = {this.state.name}></WelcomePage>} />
+              
+          
+            
           </Switch>
 
         </Router>

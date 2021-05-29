@@ -1,22 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-
+import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import DashBoard from './pages/DashBoardPage/DashBoardPage.jsx'
 import reportWebVitals from './reportWebVitals';
 import WelcomePage from './pages/WelcomePage/WelcomePage';
 import NotFound from './pages/NotFound/NotFound';
+import { createStore } from 'redux';
+import User from './store/reducer/reducer';
+
+
 
 ReactDOM.render(
-  <BrowserRouter>
+  
+    <BrowserRouter>
     <Switch>
       <Route exact path="/" component={App} />
       <Route path="/welcome" component={WelcomePage} />
       <Route path = "*" component = {NotFound} />
     </Switch>
-  </BrowserRouter>,
+  </BrowserRouter>
+  ,
   document.getElementById('root')
 );
 
@@ -24,3 +30,4 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
