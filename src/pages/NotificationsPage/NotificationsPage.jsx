@@ -38,14 +38,6 @@ export default class NotificationsPage extends React.Component{
         e.preventDefault();
         console.log(this.state.Priority);
 
-        //Trimitem email cu ticketul
-
-        emailjs.sendForm('service_xrr0vpi', 'template_939alku', e.target, 'user_fW70iSUnkx1lopmIJzfgx')
-      .then((result) => {
-          console.log(result.text);
-      }, (error) => {
-          console.log(error.text);
-      });
 
        //INTRODUCEM TICKETUL IN TABELA TICKETE
         var headers ={
@@ -63,79 +55,12 @@ export default class NotificationsPage extends React.Component{
         }
         var payload = new FormData();
         payload.append('Mesaj',this.state.Mesaj);
-        payload.append('Priority',this.state.Priority);
+        payload.append('Priority', this.state.Priority);
+        payload.append('Utilizator', "");
         axios.post('http://localhost/NOKIA-entire-project/php/team4/adauga_notificare.php',payload).then(res=>{
             this.setState({data:res.data});
         });
-
-         if (this.state.Priority == 0)
-        {
-            store.addNotification({
-            title: "Avertisment",
-            message: "S-a adaugat un ticket de prioritate 0",
-            type: 'danger',
-            container: 'top-center',
-            insert: 'bottom',
-            animationIn: ["animated", "fadeIn"],
-            animationOut: ["animated", "zoomOut"],
-          
-            dismiss: {
-                duration: 3000,
-                showIcon:true,
-            }
-            })
-        }
-        else if (this.state.Priority == 1)
-        {
-            store.addNotification({
-            title: "Avertisment",
-            message: "S-a adaugat un ticket de prioritate 1",
-            type: 'warning',
-            container: 'top-center',
-            insert: 'bottom',
-            animationIn: ["animated", "fadeIn"],
-            animationOut: ["animated", "zoomOut"],
-          
-            dismiss: {
-                duration: 3000,
-                showIcon:true,
-            }
-            })
-        }
-        else if (this.state.Priority == 2)
-        {
-            store.addNotification({
-            title: "Avertisment",
-            message: "S-a adaugat un ticket de prioritate 2",
-            type: 'info',
-            container: 'top-center',
-            insert: 'bottom',
-            animationIn: ["animated", "fadeIn"],
-            animationOut: ["animated", "zoomOut"],
-          
-            dismiss: {
-                duration: 3000,
-                showIcon:true,
-            }
-            })
-        }
-        else if (this.state.Priority == 3)
-        {
-            store.addNotification({
-            title: "Avertisment",
-            message: "S-a adaugat un ticket de prioritate 3",
-            type: 'info',
-            container: 'top-center',
-            insert: 'bottom',
-            animationIn: ["animated", "fadeIn"],
-            animationOut: ["animated", "zoomOut"],
-          
-            dismiss: {
-                duration: 3000,
-                showIcon:true,
-            }
-            })
-        }
+       
     }
 
     render() {

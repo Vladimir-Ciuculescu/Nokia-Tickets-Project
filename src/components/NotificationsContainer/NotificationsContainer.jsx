@@ -99,7 +99,7 @@ export default class NotificationsContainer extends React.Component {
     render() {
         return (
             
-            <div style = {{display:this.state.toggleNotifications ? "block": "none"}} className = "notifications-container">
+            <div style = {{display: this.props.showNotifications ? "block": "none"}} className = "notifications-container">
                
                 <div className="notifications-Header">
                     <text onClick = {() => console.log(this.state.row)}>Notificari</text>

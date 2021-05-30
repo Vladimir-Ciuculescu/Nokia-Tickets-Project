@@ -10,6 +10,7 @@ import WelcomePage from './pages/WelcomePage/WelcomePage';
 import NotFound from './pages/NotFound/NotFound';
 import { createStore } from 'redux';
 import User from './store/reducer/reducer';
+import NotificationsPage from './pages/NotificationsPage/NotificationsPage';
 
 
 

@@ -50,6 +50,10 @@ export default class Homepage extends React.Component {
 		logStatus: '',
 		nume: '',
 		prenume:'',
+		adresa: "",
+		subject: "",
+		content: "",
+		user:"",
 		}
 
 		this.onChange = this.onChange.bind(this);
@@ -69,9 +73,47 @@ export default class Homepage extends React.Component {
 
 			this.setState({ logStatus: response.data });
 			
-			const { logStatus} = this.state;
+			const { logStatus } = this.state;
 
-		if (logStatus === "You are logged in") {
+			if (logStatus === "You are logged in") {
+
+
+
+				//Adaugam notificare ca persoana s-a logat cu success;
+
+
+			
+				axios.post('http://localhost/nokia/getEmail.php', parameters).then((response) => {
+					
+					console.log("MAIL " + response.data);
+					this.props.parentCallback({adresa:response.data})
+					reactLocalStorage.set("mail", response.data);
+					localStorage.setItem('mail', response.data);
+					this.setState({ adresa: response.data });
+
+					var payload = new FormData();
+					payload.append('Mesaj', "Userul " + response.data + " a reusit sa se autentifice cu succes");
+					payload.append('Priority', 4);
+					payload.append('Utilizator', response.data);
+					axios.post('http://localhost/NOKIA-entire-project/php/team4/adauga_notificare.php', payload);
+					
+				});
+
+				
+
+				this.setState({ subject: "Succes" });
+				this.setState({ content: "Utilizatorul " + localStorage.getItem("mail") + " a reusit sa se autentifice !" });
+
+				//Trimite mail 
+				var parameters_2 = new FormData();
+				parameters_2.append('mail', localStorage.getItem("mail"));
+				parameters_2.append('subject', this.state.subject);
+				parameters_2.append('content', this.state.content);
+				axios.post('http://localhost/NOKIA-entire-project/php/team4/email.php', parameters_2).then((response) => {
+					
+					
+				})
+
 			localStorage.setItem("user", true);
 			localStorage.setItem("name", this.state.nume);
 			localStorage.setItem("surname", this.state.prenume);
@@ -89,7 +131,8 @@ export default class Homepage extends React.Component {
 
 			//Primeste prenumele
 			axios.post('http://localhost/nokia/getPrenume.php', parameters).then((response) => {
-				this.props.parentCallback({prenume:response.data})
+				
+				this.props.parentCallback({ prenume: response.data })
 				reactLocalStorage.set("surname", response.data);
 				localStorage.setItem('surname', response.data);
 				

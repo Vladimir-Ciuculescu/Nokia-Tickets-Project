@@ -2,6 +2,10 @@
   position: absolute;
   margin-left: 200px;
   margin-top: 70px;
+  z-index: 3;
+  background-color: white;
+  width: 100%;
+  height: 90%;
 }
 .settings-container {
 }
@@ -9,6 +13,7 @@
 .setari-header {
   font-size: 44px;
   font-family: "Bitter", serif;
+  color: black;
 }
 
 .notificari-header {

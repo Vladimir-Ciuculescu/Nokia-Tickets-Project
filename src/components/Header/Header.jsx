@@ -21,15 +21,7 @@ var nume;
 
 export default class Header extends React.Component {
 
-  /*
-  state = {
-    row: [],
-    toggleNotifications: false,
-    nume: localStorage.getItem('name'),
-    prenume: localStorage.getItem('surname'),
-      
-    }
-    */
+ 
 
     constructor(props) {
       super(props);
@@ -38,9 +30,11 @@ export default class Header extends React.Component {
 
     this.state = {
     row: [],
-    toggleNotifications: false,
+    toggleNotifications: true,
+    ceva:"",
       
-    }
+      }
+      
 
       variables.onSnapshot(doc => {
         this.setState({
@@ -67,13 +61,17 @@ export default class Header extends React.Component {
         
   }
   
-  showNotificationsContainer() {
+  showNotificationsContainer = () =>  {
    
     
-    
+    /*
     variables.update({
 					toggleNotifications:!this.state.toggleNotifications
-				});
+    });
+    */
+    this.setState({ toggleNotifications: !this.state.toggleNotifications });
+    this.props.SHOW(this.state.toggleNotifications);
+    
   }
 
  
@@ -92,9 +90,14 @@ export default class Header extends React.Component {
 
               
               
-                    <NotificationBadge className ="notifications-number" count={4} /><IoMdNotifications className = "icon notification-icon" onClick = {() => this.showNotificationsContainer()}></IoMdNotifications>
-                    <text className="profile-name">{`${localStorage.getItem("name")} ${localStorage.getItem("surname")}`}</text>
-              
+              <NotificationBadge
+                className="notifications-number"
+                count={4} /><IoMdNotifications
+                className="icon notification-icon"
+                onClick={this.showNotificationsContainer}></IoMdNotifications>
+                    <div className = "name">
+                      <text className="profile-name">{`${localStorage.getItem("name")} ${localStorage.getItem("surname")}`}</text>
+                    </div>              
                     <CgProfile className = "icon profile-icon"></CgProfile>
                   
                
