@@ -4,6 +4,7 @@ import './HomePage.css';
 import axios from 'axios';
 import { useHistory, Link, Redirect } from 'react-router-dom';
 import Popup from '../../components/RegisterPopup/RegisterPopup';
+import ForgotPassword from '../../components/ForgotPassword/ForgotPassword';
 import fb from '../../Firebase'
 import firestore from '@firebase/firestore';
 import {reactLocalStorage} from 'reactjs-localstorage';
@@ -44,6 +45,7 @@ export default class Homepage extends React.Component {
 		birthReg:'',
 		genderReg:'',
 		showPopup:false,
+		showForgotPassword:false,
 		username:'',
 		password:'',
 		loggedIn: loggedIn,
@@ -145,6 +147,10 @@ export default class Homepage extends React.Component {
 		 this.setState({ showPopup: childData })
 	}
 
+	handleForgotPassword = (childData) => {
+		this.setState({ showForgotPassword: childData })
+    }
+
 	onChange(e) {
 	
 		this.setState({
@@ -178,6 +184,7 @@ export default class Homepage extends React.Component {
 										placeholder="Password"
 										className="textbox1"
                        					onChange={(e)=>{this.setState({password:e.target.value});}}/>
+								<a onClick={() => this.setState({ showForgotPassword: true })} className="forgot-password">Forgot password</a>		   
 								<input type = "submit" className = "login" value = "Login"></input>
 									
 								</form>
@@ -187,7 +194,7 @@ export default class Homepage extends React.Component {
                 </div>
 					
 					<Popup parentcallback={this.handlePopup} displayProperty={this.state.showPopup}></Popup>
-					
+					<ForgotPassword parentcallback={this.handleForgotPassword} displayProperty={this.state.showForgotPassword}></ForgotPassword>
 
 					
 					
