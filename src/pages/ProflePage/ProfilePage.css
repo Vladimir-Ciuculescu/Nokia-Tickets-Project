@@ -1,0 +1,66 @@
+.profile-page {
+  position: absolute;
+  margin-left: 180px;
+  margin-top: 60px;
+  padding-top: 30px;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  padding-left: 70px;
+}
+
+.profile-header {
+  font-size: 30px;
+}
+
+.profile-title {
+  font-family: "Odibee Sans", cursive;
+}
+
+.info {
+  margin-top: 50px;
+}
+
+.name-info {
+  padding-left: 10px;
+}
+
+.mail-icon {
+  font-size: 20px;
+}
+
+.mail-info {
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+.phone-icon {
+  font-size: 20px;
+}
+
+.phone-info {
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+.address-icon {
+  font-size: 20px;
+}
+
+.address-info {
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+.birth-icon {
+  font-size: 20px;
+}
+
+.birth-info {
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+.info div {
+  margin-top: 20px;
+}

@@ -9,6 +9,7 @@ import fb from './Firebase';
 import firestore from '@firebase/firestore';
 import NotFound from "./pages/NotFound/NotFound.jsx";
 import './App.css'
+import Graphs from "./pages/Graphs/Graphs.jsx";
 
 
 var variables = fb
@@ -60,7 +61,7 @@ export default class App extends Component {
             
             <Route exact path="/" component={() => <Homepage parentCallback = {this.handleCallback}  />} />
             <Route path="/welcome" component= {() => <WelcomePage name = {this.state.name}></WelcomePage>} />
-              
+            
           
             
           </Switch>

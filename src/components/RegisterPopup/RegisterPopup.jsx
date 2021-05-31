@@ -1,6 +1,7 @@
 import './RegisterPopup.css';
 import React, {useState} from "react";
 import Axios from  'axios';
+import axios from 'axios';
 
 function Popup(props) {
 
@@ -106,9 +107,18 @@ function Popup(props) {
 
 
         if(check){
+
+            //Adaugam notificare pentru creearea unui cont nou;
+            var payload = new FormData();
+            payload.append('Mesaj', "A fost creat un cont nou cu numele de utilizator: " + usernameReg);
+            payload.append('Priority', 5);
+            payload.append('Utilizator', "");
+            axios.post('http://localhost/NOKIA-entire-project/php/team4/adauga_notificare.php', payload);
+
+
             
       
-              let parameters = new FormData();
+            let parameters = new FormData();
         parameters.append('name',nameReg);
             parameters.append('surname',surnameReg);
           parameters.append('email',emailReg);

@@ -11,9 +11,18 @@
   text-align: center;
   background: url(https://i.ibb.co/QJ1JWZ9/staff.png);
   background-size: cover;
-  height: 50px;
+  height: 40px;
   font-size: 24px;
   padding-top: 20px;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+}
+
+.ICON {
+  padding-right: 5px;
 }
 
 .menu {
@@ -28,4 +37,6 @@
 .menu li a {
   text-decoration: none;
   color: white;
+  font-family: "Roboto Condensed", sans-serif;
+  padding-left: 10px;
 }

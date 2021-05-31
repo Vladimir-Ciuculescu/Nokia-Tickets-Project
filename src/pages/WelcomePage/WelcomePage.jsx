@@ -12,6 +12,10 @@ import MainPage from '../MainPage/MainPage';
 import ReactNotification from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css';
 import axios from 'axios';
+import ProfilePage from '../ProflePage/ProfilePage';
+import 'animate.css';
+import 'animate.css/animate.compat.css';
+import 'animate.css/animate.min.css';
 
 export default class WelcomePage extends React.Component {
 
@@ -67,7 +71,7 @@ export default class WelcomePage extends React.Component {
                             title: "Avertisment",
                             message: "S-a adaugat un ticket de prioritate 0",
                             type: 'danger',
-                            container: 'top-center',
+                            container: 'top-right',
                             insert: 'bottom',
                             animationIn: ["animated", "fadeIn"],
                             animationOut: ["animated", "zoomOut"],
@@ -86,7 +90,7 @@ export default class WelcomePage extends React.Component {
                             title: "Avertisment",
                             message: "S-a adaugat un ticket de prioritate 1",
                             type: 'warning',
-                            container: 'top-center',
+                            container: 'top-right',
                             insert: 'bottom',
                             animationIn: ["animated", "fadeIn"],
                             animationOut: ["animated", "zoomOut"],
@@ -105,7 +109,7 @@ export default class WelcomePage extends React.Component {
                             title: "Avertisment",
                             message: "S-a adaugat un ticket de prioritate 2",
                             type: 'info',
-                            container: 'top-center',
+                            container: 'top-right',
                             insert: 'bottom',
                             animationIn: ["animated", "fadeIn"],
                             animationOut: ["animated", "zoomOut"],
@@ -124,7 +128,7 @@ export default class WelcomePage extends React.Component {
                             title: "Avertisment",
                             message: "S-a adaugat un ticket de prioritate 3",
                             type: 'info',
-                            container: 'top-center',
+                            container: 'top-right',
                             insert: 'bottom',
                             animationIn: ["animated", "fadeIn"],
                             animationOut: ["animated", "zoomOut"],
@@ -141,9 +145,47 @@ export default class WelcomePage extends React.Component {
                         console.log("Prioritate"+priority);
                          store.addNotification({
                              title: "Success",
-                            message: "Un utilizator s-a autentifat cu succes!",
+                            message: "Un utilizator s-a autentificat cu succes!",
                             type: 'success',
-                            container: 'top-center',
+                            container: 'top-right',
+                            insert: 'bottom',
+                            animationIn: ["animated", "fadeIn"],
+                            animationOut: ["animated", "zoomOut"],
+                        
+                            dismiss: {
+                                duration: 3000,
+                                showIcon:true,
+            }
+            })
+                    }
+                        }
+                          else if (priority === 5) {
+                            {
+                        console.log("Prioritate"+priority);
+                         store.addNotification({
+                             title: "Success",
+                            message: "A fost creat un nou cont!",
+                            type: 'success',
+                            container: 'top-right',
+                            insert: 'bottom',
+                            animationIn: ["animated", "fadeIn"],
+                            animationOut: ["animated", "zoomOut"],
+                        
+                            dismiss: {
+                                duration: 3000,
+                                showIcon:true,
+            }
+            })
+                    }
+                        }
+                         else if (priority === 6) {
+                            {
+                        console.log("Prioritate"+priority);
+                         store.addNotification({
+                             title: "Mesaj de avertizare",
+                            message: "Cienva a incercat de 5 ori sa se autentifice",
+                            type: 'danger',
+                             container: 'top-right',
                             insert: 'bottom',
                             animationIn: ["animated", "fadeIn"],
                             animationOut: ["animated", "zoomOut"],
@@ -187,6 +229,7 @@ export default class WelcomePage extends React.Component {
                     <Switch>
                         
                         <Route path="/welcome/mainpage" component={MainPage}></Route>
+                        <Route path = "/welcome/profile" component = {ProfilePage}></Route>
                         <Route path = "/welcome/notificari" component = {NotificationsPage}></Route>
                         <Route path="/welcome/setari" component={SettingsPage} />
                         <Route path ="/welcome/grafice" component = {Graphs} />

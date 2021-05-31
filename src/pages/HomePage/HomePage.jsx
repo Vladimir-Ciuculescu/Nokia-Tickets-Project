@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import React, {useEffect} from 'react';
 import './HomePage.css';
 import axios from 'axios';
@@ -53,7 +52,9 @@ export default class Homepage extends React.Component {
 		adresa: "",
 		subject: "",
 		content: "",
-		user:"",
+		user: "",
+		error_message: "",
+		incercari:0,
 		}
 
 		this.onChange = this.onChange.bind(this);
@@ -75,7 +76,7 @@ export default class Homepage extends React.Component {
 			
 			const { logStatus } = this.state;
 
-			if (logStatus === "You are logged in") {
+			if (logStatus === "You are logged in" && this.state.incercari < 5) {
 
 
 
@@ -86,10 +87,12 @@ export default class Homepage extends React.Component {
 				axios.post('http://localhost/nokia/getEmail.php', parameters).then((response) => {
 					
 					console.log("MAIL " + response.data);
-					this.props.parentCallback({adresa:response.data})
+					this.props.parentCallback({ adresa: response.data })
 					reactLocalStorage.set("mail", response.data);
 					localStorage.setItem('mail', response.data);
 					this.setState({ adresa: response.data });
+
+
 
 					var payload = new FormData();
 					payload.append('Mesaj', "Userul " + response.data + " a reusit sa se autentifice cu succes");
@@ -114,29 +117,75 @@ export default class Homepage extends React.Component {
 					
 				})
 
-			localStorage.setItem("user", true);
-			localStorage.setItem("name", this.state.nume);
-			localStorage.setItem("surname", this.state.prenume);
-			this.setState({ loggedIn: true });
-		}
+				localStorage.setItem("user", true);
+				localStorage.setItem("name", this.state.nume);
+				localStorage.setItem("surname", this.state.prenume);
+				this.setState({ loggedIn: true });
+		
 
-			//Primteste numele
-			axios.post('http://localhost/nokia/getNume.php', parameters).then((response) => {
+				//Primteste numele
+				axios.post('http://localhost/nokia/getNume.php', parameters).then((response) => {
 			
-				this.props.parentCallback({name:response.data})
-				reactLocalStorage.set("name", response.data);
-				localStorage.setItem('name', response.data);
+					this.props.parentCallback({ name: response.data })
+					reactLocalStorage.set("name", response.data);
+					localStorage.setItem('name', response.data);
 				
-			})
+				})
 
-			//Primeste prenumele
-			axios.post('http://localhost/nokia/getPrenume.php', parameters).then((response) => {
+				//Primeste prenumele
+				axios.post('http://localhost/nokia/getPrenume.php', parameters).then((response) => {
 				
-				this.props.parentCallback({ prenume: response.data })
-				reactLocalStorage.set("surname", response.data);
-				localStorage.setItem('surname', response.data);
+					this.props.parentCallback({ prenume: response.data })
+					reactLocalStorage.set("surname", response.data);
+					localStorage.setItem('surname', response.data);
 				
-		})
+				})
+
+				//Primeste telefon
+
+				axios.post('http://localhost/nokia/getPhone.php', parameters).then((response) => {
+				
+					this.props.parentCallback({ phone: response.data })
+					reactLocalStorage.set("phone", response.data);
+					localStorage.setItem('phone', response.data);
+				
+				})
+
+				//Primeste adresa
+				axios.post('http://localhost/nokia/getAddress.php', parameters).then((response) => {
+				
+					this.props.parentCallback({ address: response.data })
+					reactLocalStorage.set("address", response.data);
+					localStorage.setItem('address', response.data);
+				
+				})
+				//Primeste data nastere
+				axios.post('http://localhost/nokia/getBirthdate.php', parameters).then((response) => {
+				
+					this.props.parentCallback({ birth: response.data })
+					reactLocalStorage.set("birth", response.data);
+					localStorage.setItem('birth', response.data);
+				
+				})
+				
+			}
+			else {
+				this.setState({ error_message: "Datele nu sunt valide" });
+				this.setState({ incercari: this.state.incercari + 1 });
+			}
+
+			if (this.state.incercari === 6) {
+
+				var payload2 = new FormData();
+					payload2.append('Mesaj', "Cineva a incercat de 5 ori sa se autentifice cu username-ul: " + this.state.username);
+					payload2.append('Priority', 6);
+					payload2.append('Utilizator', "");
+					axios.post('http://localhost/NOKIA-entire-project/php/team4/adauga_notificare.php', payload2);
+
+				this.setState({ incercari: 1});
+			}
+			
+
 		},  
 		)
 	}
@@ -152,6 +201,8 @@ export default class Homepage extends React.Component {
 		})
 	}	
 	render(){
+
+		
 		
 		if (this.state.loggedIn) {
 			return <Redirect to = "/welcome"></Redirect>
@@ -164,16 +215,19 @@ export default class Homepage extends React.Component {
                 <div className="logoAndCreateContainer">
 				<img className="logoNokia" src="https://i.ibb.co/QJ1JWZ9/staff.png" alt="staff" border="0" />
 							<a onClick={() => this.setState({ showPopup: true })} className="create-account">Create new account</a>
-							<text></text>
+							
                 </div>
                 <div className="signInDiv">
                 <div className="borderLeft">
 								<form onSubmit = {this.handleLogin}>
-									 <h1>Sign In</h1>
+									<h1>Sign In</h1>
+									<div className="error-message">
+										<text>{this.state.error_message}</text>
+									</div>
 									<input type="text"
 										placeholder="Username"
 										className="textbox"
-										onChange={(e) => {this.setState({username:e.target.value});}}/>
+										onChange={(e) => { this.setState({ username: e.target.value }); }} />
 									<input type="password"
 										placeholder="Password"
 										className="textbox1"
@@ -181,6 +235,7 @@ export default class Homepage extends React.Component {
 								<input type = "submit" className = "login" value = "Login"></input>
 									
 								</form>
+								<text>Incercari: {this.state.incercari}</text>
                 <h2>{this.state.loginStatus}</h2>
                 </div>
                 </div>

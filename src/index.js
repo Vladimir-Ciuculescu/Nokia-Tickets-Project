@@ -11,6 +11,7 @@ import NotFound from './pages/NotFound/NotFound';
 import { createStore } from 'redux';
 import User from './store/reducer/reducer';
 import NotificationsPage from './pages/NotificationsPage/NotificationsPage';
+import Graphs from './pages/Graphs/Graphs';
 
 
 
@@ -20,6 +21,7 @@ ReactDOM.render(
     <Switch>
       <Route exact path="/" component={App} />
       <Route path="/welcome" component={WelcomePage} />
+     
       <Route path = "*" component = {NotFound} />
     </Switch>
   </BrowserRouter>
