@@ -48,15 +48,15 @@ export default class NotificationsContainer extends React.Component {
         
         return this.state.row.map((item) => {
 
-            switch (item.MESAJ) {
+          switch (item.MESAJ) {
                 
                 case "A fost creat un ticket nou de prioritate 0":
                     
                     return (
                         <div className = "notification-item">
                             <AiFillCloseCircle className = "Icon danger-icon"></AiFillCloseCircle>
-                            <text>{item.MESAJ}</text>
-                            <text>{item.DATA_CREAT}</text>
+                            <text style={{fontSize: '14px', textAlign: 'left'}}>{item.MESAJ}</text>
+                            <text style={{fontSize: '12px', textAlign: 'right'}}>{item.DATA_CREAT}</text>
                         </div>
                     )
                     break;
@@ -65,8 +65,8 @@ export default class NotificationsContainer extends React.Component {
                     return (
                         <div className = "notification-item">
                             <AiFillWarning className = "Icon warning-icon"></AiFillWarning>
-                            <text>{item.MESAJ}</text>
-                            <text>{item.DATA_CREAT}</text>
+                            <text style={{fontSize: '14px', textAlign: 'left'}}>{item.MESAJ}</text>
+                            <text style={{fontSize: '12px', textAlign: 'right'}}>{item.DATA_CREAT}</text>
                         </div>
                     )
                     break;
@@ -75,8 +75,8 @@ export default class NotificationsContainer extends React.Component {
                     return (
                         <div className = "notification-item">
                             <AiFillInfoCircle className = "Icon info-icon"></AiFillInfoCircle>
-                            <text>{item.MESAJ}</text>
-                            <text>{item.DATA_CREAT}</text>
+                            <text style={{fontSize: '14px', textAlign: 'left'}}>{item.MESAJ}</text>
+                            <text style={{fontSize: '12px', textAlign: 'right'}}>{item.DATA_CREAT}</text>
                         </div>
                     )
                     break;
@@ -86,10 +86,22 @@ export default class NotificationsContainer extends React.Component {
                     return (
                         <div className = "notification-item">
                             <AiFillInfoCircle className = "Icon info-icon"></AiFillInfoCircle>
-                            <text>{item.MESAJ}</text>
-                            <text>{item.DATA_CREAT}</text>
+                            <text style={{fontSize: '14px', textAlign: 'left'}}>{item.MESAJ}</text>
+                            <text style={{fontSize: '12px', textAlign: 'right'}}>{item.DATA_CREAT}</text>
                         </div>
                     )
+                    break;
+
+                default:
+
+                    return(
+                        <div className = "notification-item">
+                            <AiFillInfoCircle className = "Icon info-icon"></AiFillInfoCircle>
+                            <text style={{fontSize: 14, textAlign: 'left'}}>{item.MESAJ}</text>
+                            <text style={{fontSize: 12, textAlign: 'right'}}>{item.DATA_CREAT}</text>
+                        </div>
+                    )
+
                     break;
                 
             }

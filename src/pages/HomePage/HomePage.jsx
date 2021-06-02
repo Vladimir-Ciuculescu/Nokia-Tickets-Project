@@ -235,7 +235,7 @@ export default class Homepage extends React.Component {
 								<input type = "submit" className = "login" value = "Login"></input>
 									
 								</form>
-								<text>Incercari: {this.state.incercari}</text>
+								
                 <h2>{this.state.loginStatus}</h2>
                 </div>
                 </div>

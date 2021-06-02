@@ -76,7 +76,7 @@ const MainPage = () => {
                     <tr>
                         <td>
                             <ContentEditable
-                                onFocus={(e) => setInput(e.target.innerText)}
+                                onFocus={(e) => { setInput(e.target.innerText)}}
                                 onBlur={(e) => changeData(e.target.innerText)}
                             html = {item.INCIDENT_NUMBER}></ContentEditable>
                         </td>
