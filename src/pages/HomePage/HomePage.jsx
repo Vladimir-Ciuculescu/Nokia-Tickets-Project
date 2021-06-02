@@ -6,6 +6,7 @@ import Popup from '../../components/RegisterPopup/RegisterPopup';
 import fb from '../../Firebase'
 import firestore from '@firebase/firestore';
 import {reactLocalStorage} from 'reactjs-localstorage';
+import ForgotPassword from '../../components/ForgotPassword/ForgotPassword';
 
 
 
@@ -46,6 +47,7 @@ export default class Homepage extends React.Component {
 		username:'',
 		password:'',
 		loggedIn: loggedIn,
+		showForgotPassword:false,
 		logStatus: '',
 		nume: '',
 		prenume:'',
@@ -194,6 +196,10 @@ export default class Homepage extends React.Component {
 		 this.setState({ showPopup: childData })
 	}
 
+	handleForgotPassword = (childData) => {
+		this.setState({ showForgotPassword: childData })
+    }
+
 	onChange(e) {
 	
 		this.setState({
@@ -215,34 +221,31 @@ export default class Homepage extends React.Component {
                 <div className="logoAndCreateContainer">
 				<img className="logoNokia" src="https://i.ibb.co/QJ1JWZ9/staff.png" alt="staff" border="0" />
 							<a onClick={() => this.setState({ showPopup: true })} className="create-account">Create new account</a>
-							
+							<text></text>
                 </div>
                 <div className="signInDiv">
                 <div className="borderLeft">
 								<form onSubmit = {this.handleLogin}>
-									<h1>Sign In</h1>
-									<div className="error-message">
-										<text>{this.state.error_message}</text>
-									</div>
+									 <h1>Sign In</h1>
 									<input type="text"
 										placeholder="Username"
 										className="textbox"
-										onChange={(e) => { this.setState({ username: e.target.value }); }} />
+										onChange={(e) => {this.setState({username:e.target.value});}}/>
 									<input type="password"
 										placeholder="Password"
 										className="textbox1"
                        					onChange={(e)=>{this.setState({password:e.target.value});}}/>
+								<a onClick={() => this.setState({ showForgotPassword: true })} className="forgot-password">Forgot password</a>		   
 								<input type = "submit" className = "login" value = "Login"></input>
 									
 								</form>
-								
                 <h2>{this.state.loginStatus}</h2>
                 </div>
                 </div>
                 </div>
 					
 					<Popup parentcallback={this.handlePopup} displayProperty={this.state.showPopup}></Popup>
-					
+					<ForgotPassword parentcallback={this.handleForgotPassword} displayProperty={this.state.showForgotPassword}></ForgotPassword>
 
 					
 					

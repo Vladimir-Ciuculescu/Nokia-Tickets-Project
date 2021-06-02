@@ -1,14 +1,3 @@
-/*.App,
-html {
-  background-color: hotpink;
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: auto;
-}
-*/
-
 .App {
   background: rgb(63, 94, 251);
   background: radial-gradient(
@@ -23,16 +12,6 @@ html {
 }
 html {
   background-color: #124191;
-}
-
-.error-message {
-  height: 30px;
-  width: 380px;
-  color: red;
-  margin-left: 80px;
-  margin-top: -20px;
-  margin-bottom: 10px;
-  font-size: 20px;
 }
 
 h1,
@@ -64,7 +43,7 @@ h2 {
   height: 100%;
 }
 .logoNokia {
-  width: 400px;
+  width: calc(25vw);
   margin-left: 35%;
   padding-top: 25%;
   margin-bottom: 3%;
@@ -72,9 +51,10 @@ h2 {
 .logoAndCreateContainer a {
   color: white;
   font-weight: bold;
-  font-size: calc(0.4rem + 1.9vw);
-  margin-left: 38%;
+  font-size: calc(0.2rem + 1.6vw);
+  margin-left: 42.5%;
   text-decoration: none;
+  text-align: center;
 }
 .login {
   width: 30%;
@@ -109,7 +89,8 @@ h1 {
   border: none;
   font-family: "Leelawadee UI";
   border-radius: 6px;
-  height: 13%;
+  padding-top: 2%;
+  padding-bottom: 2%;
   width: 65%;
   margin-bottom: 4%;
   font-size: calc(0.4rem + 1.3vw);
@@ -124,9 +105,15 @@ h1 {
 
 .login {
   font-family: "Leelawadee UI";
-  margin-left: 40%;
+  font-size: calc(0.4rem + 1.3vw);
+  width: fit-content;
+  height: fit-content;
+  margin-top: 0;
+  margin-left: 75.5%;
   text-align: center;
-  padding-right: 10px;
+  border: none;
+  border-radius: 6px;
+  color: rgb(47, 47, 47);
 }
 
 .borderLeft a {
@@ -136,8 +123,15 @@ h1 {
   font-style: italic;
   text-decoration: none;
   display: block;
-  margin-bottom: 6%;
+  margin-bottom: 3%;
 }
 .logoAndCreateContainer a:hover {
   cursor: pointer;
+}
+
+.borderLeft a:hover {
+  cursor: pointer;
+}
+.forgot-password {
+  width: fit-content;
 }

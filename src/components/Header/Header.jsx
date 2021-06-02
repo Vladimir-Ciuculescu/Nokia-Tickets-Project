@@ -28,13 +28,12 @@ export default class Header extends React.Component {
       
       const name = localStorage.getItem("name");
 
-    this.state = {
-    row: [],
-    toggleNotifications: true,
-    ceva:"",
-      
+      this.state = {
+        row: [],
+        toggleNotifications: true,
+        ceva:"",
+        NumberNotifications:null,
       }
-      
 
       variables.onSnapshot(doc => {
         this.setState({
@@ -45,15 +44,26 @@ export default class Header extends React.Component {
     
   }
   
+  
     componentDidMount()
     {
         axios.get('http://localhost/react-php/citeste_notificare.php')
           .then( response =>{
-            console.log(response);
+            
             this.setState({row:response.data});
           })
           .catch(function (error) {
-          console.log(error);
+          
+          })
+          .then(function () {
+
+          });
+          axios.get('http://localhost/NOKIA-entire-project/php/team4/number_notifications.php')
+          .then( res =>{
+            this.setState({NumberNotifications:res.data});
+          })
+          .catch(function (error) {
+       
           })
           .then(function () {
 
@@ -76,11 +86,8 @@ export default class Header extends React.Component {
 
  
   render() {
-      
-   
 
-    console.log(localStorage);
-
+    console.log(this.state.NumberNotifications);
         
         return (
 
@@ -92,9 +99,12 @@ export default class Header extends React.Component {
               
               <NotificationBadge
                 className="notifications-number"
-                count={4} /><IoMdNotifications
+                count={this.state.NumberNotifications} 
+              />
+              <IoMdNotifications
                 className="icon notification-icon"
-                onClick={this.showNotificationsContainer}></IoMdNotifications>
+                onClick={this.showNotificationsContainer}
+              ></IoMdNotifications>
                     <div className = "name">
                       <text className="profile-name">{`${localStorage.getItem("name")} ${localStorage.getItem("surname")}`}</text>
                     </div>              

@@ -15,7 +15,7 @@
 .notifications-number {
   z-index: 3;
   margin-top: 3px;
-  margin-right: 44px;
+  margin-right: -10px;
 }
 
 .name {
